@@ -94,3 +94,9 @@ export interface ITableColumn {
         sort: boolean;
     };
 }
+
+
+export interface ILogout { 
+    refresh_token: string 
+    userType: string 
+}
