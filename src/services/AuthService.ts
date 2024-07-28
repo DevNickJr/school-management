@@ -1,4 +1,4 @@
-import { IUserRegister, IUserLogin, IUser, IProfile, IPassword, IForgotPassword, IChangePassword } from '@/interfaces'
+import { IUserRegister, IUserLogin, IUser, IProfile, IPassword, IForgotPassword, IChangePassword, ILogout } from '@/interfaces'
 import BaseService, { NoAuthServcie } from "./BaseService"
 
 const servicePrefix = "/auth"
@@ -48,3 +48,8 @@ export const apiUpdateUser =  (data: IProfile, token?: string) => {
 export const apiUpdatePassword =  (data: IPassword, token?: string) => {
     return BaseService.patch(`${servicePrefix}/password/change/`, data, Auth(token!))
 }
+
+export const apiLogout =  (data: ILogout) => {
+    return BaseService.post(`${servicePrefix}/sign-out?refresh_token=${data.refresh_token}&userType=${data.userType}`)
+}
+
