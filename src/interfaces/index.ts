@@ -1,3 +1,11 @@
+export interface IResponseData<T> {    
+    totalItems: number
+    totalPages: number
+    currentPage: number
+    items: T
+}
+
+
 export interface IReducerAction<T> {
     type: T;
     payload?: string | { [key: string]: string };
@@ -46,11 +54,13 @@ export interface IProfile {
 
 export interface IUser extends IUserRegister {
     status: string
-    middle_name: string | null,
-    profile_picture_url: string,
-    is_active: boolean | null,
-    is_verified: boolean | null,
+    middle_name: string | null
+    profile_picture_url: string
+    is_active: boolean | null
+    is_verified: boolean | null
     is_staff: boolean | null
+    createdAt?: string
+    _id?: string
 }
 
 export interface IPassword {
