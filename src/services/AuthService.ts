@@ -33,6 +33,10 @@ export const apiGetUser =  (token: string) => {
     return BaseService.get<IProfile>(`${servicePrefix}/user/`, Auth(token))
 }
 
+export const apiGetUsers =  () => {
+    return BaseService.get(`${servicePrefix}/users`)
+}
+
 export const apiUpdateUser =  (data: IProfile, token?: string) => {
     const formData = new FormData()
     Object.keys(data).forEach(key => formData.append(key, data[key as keyof IProfile]))
