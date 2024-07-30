@@ -10,14 +10,12 @@ import Loader from '@/components/Loader'
 
 
 const initialState: IUserRegister = {
+  name: '',        
   email: '',
   password: '', 
   confirm_password: '',
   phone: '',
-  first_name: '',      
-  last_name: '',        
-  level: '',      
-  matric_no: '',  
+  schoolName: '',
 }
 
 const Register = () => {
@@ -33,14 +31,14 @@ const registerMutation = usePost<IUserRegister, any>(
     apiRegister,
     {
       onSuccess: () => {
-          // queryClient.invalidateQueries('user')
-          sessionStorage.setItem('email', user.email)
-          router.push('/face-id', {
+          toast.success('Success')
+          localStorage.setItem('email', user.email)
+          router.push('/', {
       })
       },
       onError: (error: any) => {
         console.log({error})
-          toast.error(error?.response?.data?.errors?.message || "An error occured")
+        toast.error(error?.response?.data?.errors?.message || "An error occured")
       }
     }
   )
@@ -56,11 +54,6 @@ const registerMutation = usePost<IUserRegister, any>(
 
 const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
   e.preventDefault()
-  setLoading(true)
-
-  console.log('registering')
-
-
   if (user?.password !== user?.confirm_password) {
       toast.error("Password Mismatch")
       return
@@ -73,22 +66,7 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
       toast.error("Phone number must be at least 11 characters")
       return
   }
-  
-
-  try {
-    console.log("user", user )
-    // const res = await apiRegister(user)
-    // console.log({res})
-    registerMutation?.mutate(user)
-    console.log(registerMutation)
-
-      // console.log("res", res)
-  } catch (error: any) {
-      console.log("error", error)
-      toast.error(error?.response?.data?.data?.message || "An error occured")
-
-  }
-  setLoading(false)
+  registerMutation?.mutate(user)
 }
 
 
@@ -104,12 +82,8 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           {step === 1 && (
             <form className='grid gap-4' onSubmit={handleNext}>
               <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="first_name">First Name</label>
-                <input required value={user?.first_name} onChange={(e) => dispatch({ type: "first_name", payload: e.target.value})} type='text' name="first_name" id="first_name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter First Name' />
-              </div>
-              <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="last_name">Last Name</label>
-                <input required value={user?.last_name} onChange={(e) => dispatch({ type: "last_name", payload: e.target.value})}  type="text" name="last_name" id="last_name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Last Name' />
+                <label htmlFor="name">Name</label>
+                <input required value={user?.name} onChange={(e) => dispatch({ type: "name", payload: e.target.value})} type='text' name="name" id="name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter First Name' />
               </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="email">Email Address</label>
@@ -119,6 +93,10 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
                 <label htmlFor="phone">Phone Number</label>
                 <input required value={user?.phone} onChange={(e) => dispatch({ type: "phone", payload: e.target.value})}  type="tel" name="phone" id="phone" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
               </div>
+              <div className='flex flex-col gap-2 text-xs'>
+                <label htmlFor="password">School Name</label>
+                <input required value={user?.schoolName} onChange={(e) => dispatch({ type: "schoolName", payload: e.target.value})}  type="schoolName" name="schoolName" id="schoolName" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
+              </div>
               <button type='submit' className='flex items-center justify-center w-full gap-2 p-4 pl-5 pr-6 mt-8 text-sm font-bold text-white rounded-md bg-primary'>
                 Proceed
               </button>
@@ -126,14 +104,6 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           )}
           {step === 2 && (
             <form className='grid gap-4' onSubmit={handleRegister}>
-              <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="level">Level</label>
-                <input required value={user?.level} onChange={(e) => dispatch({ type: "level", payload: e.target.value})} type='text' name="level" id="level" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Level' />
-              </div>
-              <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="matric_no">Mat No.</label>
-                <input required value={user?.matric_no} onChange={(e) => dispatch({ type: "matric_no", payload: e.target.value})}  type="text" name="matric_no" id="matric_no" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Mat Number' />
-              </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="password">Password</label>
                 <input required value={user?.password} onChange={(e) => dispatch({ type: "password", payload: e.target.value})}  type="password" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />

@@ -1,5 +1,5 @@
 const appConfig = {
-    apiPrefix: "http://localhost:3200/api/v1",
+    apiPrefix: "http://localhost:3000/",
     domain: "http://localhost:3000",
 }
 

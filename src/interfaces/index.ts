@@ -31,14 +31,12 @@ export interface IChangePassword {
 }
 
 export interface IUserRegister {
+    name: string   
+    schoolName: string
     email: string
     password: string
     confirm_password: string
     phone: string
-    first_name: string      
-    last_name: string        
-    level: string      
-    matric_no: string  
 }
 
 export interface IProfile {
@@ -89,7 +87,7 @@ export interface ILoginReducerAction extends IReducerAction<"email" | "password"
     payload: string
 }
 
-export interface IRegistereducerAction extends IReducerAction<"email" | "password" | "confirm_password" | "phone" | "first_name" | "last_name" | "level" | "matric_no"> {
+export interface IRegistereducerAction extends IReducerAction<keyof IUserRegister | 'reset'> {
     payload: string
 }
 

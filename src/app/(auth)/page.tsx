@@ -15,43 +15,34 @@ const initialState: IUserLogin = {
 
 
 const Login = () => {
-  const [loading, setLoading] = React.useState(false)
   const [user, dispatch] = useReducer((state: IUserLogin, action: ILoginReducerAction) => {
     return { ...state, [action.type]: action.payload }
-}, initialState)
-
-const { mutate } = useMutate<IUserLogin, any>(
-  apiLogin,
-  {
-    onSuccess: () => {
-        toast.success("Logged in Successfully")
-        router.push('/dashboard')
-    },
-    onError: (error: any) => {
-      console.log({error})
-        toast.error(error?.message || "An error occured")
-    }
-  }
-)
-
-
+  }, initialState)
   const router = useRouter()
 
-  const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
-    setLoading(true)
-    try {
-    
-    } catch (error: any) {
-        console.log("error", error)
-        toast.error(error?.message)
+  const loginMutation = useMutate<IUserLogin, any>(
+    apiLogin,
+    {
+      onSuccess: (data) => {
+          toast.success("Logged in Successfully")
+          router.push('/dashboard')
+      },
+      onError: (error: any) => {
+        console.log({error})
+          toast.error(error?.message || "An error occured")
+      }
     }
-    setLoading(false)
-}
+  )
+
+
+  const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    loginMutation.mutate(user)
+  }
 
   return (
     <div className='pt-12 md:pl-24'>
-      {loading && <Loader />}
+      {loginMutation?.isPending && <Loader />}
       <div className="flex flex-col items-center gap-4 mb-12">
           <h1 className='text-2xl font-bold'>Welcome Back!</h1>
           <p className='text-sm'>Welcome Back! Please Enter your details</p>
