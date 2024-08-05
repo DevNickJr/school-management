@@ -45,12 +45,12 @@ const SideNav = ({ }) => {
   
 
   return (
-    <div className={`sm:flex w-full justify-between hidden max-h-screen min-h-screen h-screen text-black bg-white ${collapse ? "max-w-20 pl-3 pb-0" : "max-w-64 pl-6 pb-0"} transition-all`}>
+    <div className={`md:flex w-full justify-between hidden max-h-screen min-h-screen h-screen text-black bg-white ${collapse ? "max-w-20 pl-3 pb-0" : "max-w-64 pl-6 pb-0"} transition-all`}>
         {(logoutMutation?.isPending) && <Loader />}
         <LogoutModal
             logout={() => logoutMutation.mutate({
                 refresh_token: context.refreshToken!,
-                userType: context.userType!
+                role: context.role!
             })}
             isOpen={logoutModalIsOpen} 
             setIsOpen={setLogoutModalOpen} 
@@ -70,8 +70,8 @@ const SideNav = ({ }) => {
                 <div className={`flex flex-col items-center gap-3 mb-10`}>
                     <Image src={Profile} alt={""} className='w-20 h-20 rounded-full cursor-pointer' />
                     <div className="flex flex-col items-center gap-1.5">
-                        <h3 className={`text-xl font-bold`}>John Philip</h3>
-                        <p className='text-xs text-black/70'>Operator</p>
+                        <h3 className={`text-xl font-bold`}>{context.name}</h3>
+                        <p className='text-xs text-black/70'>{context.role} Account</p>
                     </div>
                 </div>
                 <div className='h-full overflow-scroll text-sm pb-52 font-inter'>
@@ -85,7 +85,7 @@ const SideNav = ({ }) => {
                                 <div className='flex flex-col gap-3'>
                                     {
                                         navSection.navItems?.map((navItem, index) => (
-                                            <Link key={navItem.id} href={navItem.link} className={`flex items-center gap-3 cursor-pointer rounded-md px-4 py-2.5 whitespace-nowrap ${collapse ? "justify-center" : ""} ${(pathname.includes(navItem.link) && navItem.link !== "/dashboard") ? "bg-secondary text-white font-semibold" : (pathname==="/dashboard" && navItem.link==="/dashboard") ? "bg-secondary text-white font-semibold" : ""}`}>
+                                            <Link key={navItem.id} href={navItem.link} className={`flex items-center gap-3 cursor-pointer rounded-md px-4 py-2.5 whitespace-nowrap ${collapse ? "justify-center" : ""} ${(pathname.includes(navItem.link) && navItem.link !== "/dashboard") ? "bg-primary text-white font-semibold" : (pathname==="/dashboard" && navItem.link==="/dashboard") ? "bg-primary text-white font-semibold" : ""}`}>
                                                 <div>
                                                     <navItem.Icon className={"text-lg"} />
                                                 </div>

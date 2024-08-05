@@ -12,7 +12,7 @@ const navItems =  [
         title: "",
         navItems: [
             {
-                id: 32,
+                id: 1,
                 title: "Dashboard",
                 link: "/dashboard",
                 Icon: MdOutlinePersonPin,
@@ -30,13 +30,13 @@ const navItems =  [
                 Icon: MdOutlinePersonPin,
             },
             {
-                id: 1,
+                id: 2,
                 title: "Teachers",
                 link: "/dashboard/teachers",
                 Icon: MdOutlinePersonPin,
             },
             {
-                id: 2,
+                id: 3,
                 title: "Students",
                 link: "/dashboard/students",
                 Icon: MdOutlinePersonPin,
@@ -54,7 +54,7 @@ const navItems =  [
                 Icon: MdOutlineOtherHouses,
             },
             {
-                id: 3,
+                id: 2,
                 title: "Sessions",
                 link: "/dashboard/sessions",
                 Icon: MdOutlineOtherHouses,
@@ -66,19 +66,19 @@ const navItems =  [
         title: "",
         navItems: [
             {
-                id: 2,
+                id: 1,
                 title: "Support",
                 link: "/dashboard/support",
                 Icon: MdOutlineContactSupport,
             },
             {
-                id: 3,
+                id: 2,
                 title: "Settings",
                 link: "/dashboard/settings",
                 Icon: FiSettings,
             },
             {
-                id: 4,
+                id: 3,
                 title: "Audit Trail",
                 link: "/dashboard/audit-trail",
                 Icon: HiOutlineBanknotes,

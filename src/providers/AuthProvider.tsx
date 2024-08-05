@@ -2,11 +2,13 @@
 import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
 
 export interface IAuthContext {
+    name: string | null;
+    email: string | null; 
+    account: string | null; 
     isLoggedIn: boolean
+    role: string | null
     accessToken: string | null
     refreshToken: string | null
-    role: string | null
-    userType: "customer" | "operator" | "agent" | "admin" | "driver" | null
 }
 
 let user = null
@@ -16,6 +18,9 @@ if (typeof window !== "undefined" && localStorage) {
 }
 
 const initialState: IAuthContext = user ? JSON.parse(user) : {
+    name: null,
+    email: null, 
+    account: null, 
     isLoggedIn: false,
     accessToken: null,
     refreshToken: null,
@@ -33,11 +38,13 @@ interface IAuthContextProvider extends IAuthContext {
 
 
 const initAuthContext: IAuthContextProvider = {
+    name: null,
+    email: null, 
+    account: null, 
     isLoggedIn: false,
     accessToken: null,
     refreshToken: null,
     role: null,
-    userType: null,
     dispatch: (): void => {}
 }
 
@@ -48,30 +55,20 @@ export const AuthContext = createContext<IAuthContextProvider>(initAuthContext)
 export const authReducer = (state: IAuthContext, action: IAction) => {
     switch (action.type) {
         case "LOGIN":
-            // console.log("action.payload", action.payload)
-            localStorage.setItem("user", JSON.stringify({
+            const authUser = {
                 isLoggedIn: true,
                 accessToken: action?.payload?.accessToken || null,
                 refreshToken: action?.payload?.refreshToken || null,
                 role: action?.payload?.role || null,
-                userType: action?.payload?.userType || null,
-            }))
-            return {
-                isLoggedIn: true,
-                accessToken: action?.payload?.accessToken || null,
-                refreshToken: action?.payload?.refreshToken || null,
-                role: action?.payload?.role || null,
-                userType: action?.payload?.userType || null,
+                name: action?.payload?.name || null,
+                email: action?.payload?.email || null,
+                account: action?.payload?.account || null,
             }
+            localStorage.setItem("user", JSON.stringify(authUser))
+            return authUser
         case "LOGOUT":
             localStorage.removeItem("user")
-            return {
-                isLoggedIn: false,
-                accessToken: null,
-                refreshToken: null,
-                role: null,
-                userType: null,
-            }
+            return initialState;
         default:
             return state
     }
@@ -84,13 +81,7 @@ export const AuthContextProvider = ({children} : { children: ReactNode }) => {
         const auth = localStorage.getItem("user")
         if (auth) {
             const user: IAuthContext = JSON.parse(auth)
-            dispatch({type: "LOGIN", payload: {
-                // isLoggedIn: true,
-                accessToken: user?.accessToken,
-                refreshToken: user?.refreshToken || null,
-                role: user?.role || null,
-                userType: user?.userType || null,
-            } })
+            dispatch({type: "LOGIN", payload: user })
         }
     }, [dispatch])
     

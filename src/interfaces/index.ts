@@ -18,6 +18,15 @@ export interface IUserLogin {
     password: string
 }
 
+export interface IUserLoginResponse {
+    name: string | null;
+    email: string | null; 
+    account: string | null; 
+    role: string | null;
+    access_token: string | null;
+    refresh_token: string | null;
+}
+
 export interface IForgotPassword { 
     email: string, 
     redirect_url: string 
@@ -106,5 +115,5 @@ export interface ITableColumn {
 
 export interface ILogout { 
     refresh_token: string 
-    userType: string 
+    role: string 
 }

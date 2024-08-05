@@ -2,11 +2,12 @@
 import Link from 'next/link'
 import React, { useReducer, FormEvent } from 'react'
 import { toast } from 'react-toastify'
-import { IUserLogin, ILoginReducerAction } from '@/interfaces'
+import { IUserLogin, ILoginReducerAction, IUserLoginResponse } from '@/interfaces'
 import { useRouter } from 'next/navigation'
 import useMutate from '@/hooks/useMutate'
 import { apiLogin } from '@/services/AuthService'
 import Loader from '@/components/Loader'
+import { useAuthContext } from '@/hooks/useAuthContext'
 
 const initialState: IUserLogin = {
   email: '',
@@ -15,17 +16,25 @@ const initialState: IUserLogin = {
 
 
 const Login = () => {
-  const [user, dispatch] = useReducer((state: IUserLogin, action: ILoginReducerAction) => {
+  const [user, userDispatch] = useReducer((state: IUserLogin, action: ILoginReducerAction) => {
     return { ...state, [action.type]: action.payload }
   }, initialState)
+  const { dispatch } = useAuthContext()
+
   const router = useRouter()
 
   const loginMutation = useMutate<IUserLogin, any>(
     apiLogin,
     {
-      onSuccess: (data) => {
-          toast.success("Logged in Successfully")
-          router.push('/dashboard')
+      onSuccess: (data: IUserLoginResponse) => {
+        console.log({ data })
+        dispatch({ type: "LOGIN", payload: {
+          ...data,
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+        }})
+        toast.success("Logged in Successfully")
+        router.push('/dashboard')
       },
       onError: (error: any) => {
         console.log({error})
@@ -51,11 +60,11 @@ const Login = () => {
         <div className='grid gap-10 mb-2'>
             <div className='flex flex-col gap-2 text-xs'>
               <label htmlFor="name">Email Address</label>
-              <input  value={user?.email} onChange={(e) => dispatch({ type: "email", payload: e.target.value})} type="text" name="name" id="name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Email Address' />
+              <input  value={user?.email} onChange={(e) => userDispatch({ type: "email", payload: e.target.value})} type="text" name="name" id="name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Email Address' />
             </div>
             <div className='flex flex-col gap-2 text-xs'>
               <label htmlFor="name">Password</label>
-              <input  value={user?.password} onChange={(e) => dispatch({ type: "password", payload: e.target.value})} type="text" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
+              <input  value={user?.password} onChange={(e) => userDispatch({ type: "password", payload: e.target.value})} type="text" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
             </div>
         </div>
         <Link href='/forgot-password' className='my-2 text-sm font-semibold text-primary'>
