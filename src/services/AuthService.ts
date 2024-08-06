@@ -54,6 +54,6 @@ export const apiUpdatePassword =  (data: IPassword, token?: string) => {
 }
 
 export const apiLogout =  (data: ILogout) => {
-    return BaseService.post(`${servicePrefix}/sign-out?refresh_token=${data.refresh_token}&userType=${data.userType}`)
+    return BaseService.post(`${servicePrefix}/sign-out?refresh_token=${data.refresh_token}&userType=${data.role}`)
 }
 

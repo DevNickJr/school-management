@@ -1,8 +1,8 @@
 "use client"
-import Button from '@/components/Button'
 import React from 'react'
 import ErrorImg from "@/assets/logo.svg"
 import Image from 'next/image'
+import { Button } from '../ui/button'
 
 interface IProps<T> {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -47,10 +47,10 @@ const LogoutModal = <T,>({ isOpen, setIsOpen, logout }: IProps<T>) => {
                             <p className='mb-4 text-sm font-semibold text-[#abb4bf] '>Are you sure you want to logout from this site?</p>
                         </div>
                         <div className="flex">
-                            <Button variant='danger' outlined className='w-full py-3 md:py-5 rounded-r-none max-w-56 bg-[#ED3A3A0D] text-black' onClick={() => setIsOpen(false)} >
+                            <Button className='w-full py-3 md:py-5 rounded-r-none max-w-56 bg-[#ED3A3A0D] text-black' onClick={() => setIsOpen(false)} >
                                 Cancel
                             </Button>
-                            <Button variant='danger' className='w-full py-3 rounded-l-none md:py-5 max-w-56' onClick={() => logout()} >
+                            <Button className='w-full py-3 rounded-l-none md:py-5 max-w-56' onClick={() => logout()} >
                                 Confirm
                             </Button>
                         </div>

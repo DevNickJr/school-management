@@ -1,76 +1,65 @@
-"use client"
-import { ColumnDef } from "@tanstack/react-table"
-import { MdCheckBoxOutlineBlank, MdDelete, MdOutlineRemoveRedEye } from "react-icons/md"
+"use client";
 import ColumnHead from "@/components/ColumnHead";
-import DateColumn from "@/components/DateColumn";
-import { IUser } from "@/interfaces";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ITeacher } from "@/interfaces";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { Eye } from "lucide-react";
 
-interface IProps {
-  editFunc: (id: string) => void,
-  deleteFunc: (id: string) => void
-}
+const teacherColumnHelper = createColumnHelper<ITeacher>();
 
+export const teacherColumnsMaker = () =>  [
+    teacherColumnHelper.accessor("_id", {
+        header: ({ column }) => <ColumnHead title="" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <div>
+            <Checkbox className="w-3.5 h-3.5" />
+        </div>,
+    }),
+    teacherColumnHelper.accessor("name", {
+        header: ({ column }) => <ColumnHead title="Name" column={column} />,
 
-
-export const columnsMaker = ({ 
-  editFunc, 
-  deleteFunc
- }: IProps): ColumnDef<IUser>[] => [
-  {
-    id: "select",
-    cell: ({ row }) => {    
-      return (
-        <button className="w-6 h-6 p-0">
-          <MdCheckBoxOutlineBlank className="w-6 h-6 text-black/10" />
-        </button>
-      )
-    },
-  },
-  {
-    accessorKey: "propertyId",
-    header: ({ column }) => <ColumnHead title="Property ID" column={column} />,
-  },
-  {
-    accessorKey: "abssin",
-    header: ({ column }) => <ColumnHead title="ABSSIN" column={column} />,
-
-  },
-  {
-    accessorKey: "amount",
-    header: ({ column }) => <ColumnHead title="Amount" column={column} />,
-  },
-  {
-    accessorKey: "currency",
-    header: ({ column }) => <ColumnHead title="Currency" column={column} />,
-  },
-  {
-    accessorKey: "paymentChannel",
-    header: ({ column }) => <ColumnHead title="Payment Channel" column={column} />,
-  },
-  {
-    accessorKey: "transactionId",
-    header: ({ column }) => <ColumnHead title="Transaction ID" column={column} />,
-  },
-  {
-    accessorKey: "createdAt",
-    header: ({ column }) => <ColumnHead title="CreatedAt" column={column} />,
-    cell: ({ row }) => {
-      const payment = row.original
-      return <DateColumn value={payment.createdAt || ''} row={row} />
-    },
-  },
-  {
-    id: "actions",
-    header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex items-center justify-center" />,
-    cell: ({ row }) => {
-      const payment = row.original
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <MdOutlineRemoveRedEye className="text-xl cursor-pointer text-black/40" onClick={() =>  editFunc(payment?._id || "")} />
-          <MdDelete onClick={() => deleteFunc(payment._id || "")} className="text-xl cursor-pointer text-black/40" />
-        </div>
-
-      )
-    },
-  },
-]
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    teacherColumnHelper.accessor("email", {
+      header: ({ column }) => <ColumnHead title="Email" column={column} />,
+      sortingFn: "text",
+      cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    teacherColumnHelper.accessor("gender", {
+      header: ({ column }) => <ColumnHead title="Gender" column={column} />,
+      sortingFn: "text",
+      cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    teacherColumnHelper.accessor("createdAt", {
+      header: ({ column }) => <ColumnHead title="Joined Date" column={column} />,
+      sortingFn: "text",
+      cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    // teacherColumnHelper.accessor(row => row, {
+    //     id: 'actions',
+    //     sortingFn: "text",
+    //     cell: (info) => {
+    //         const rowData = info.getValue()
+    //         const id = rowData?._id;
+    //         return (
+    //             <Action
+    //                 viewLink={`/admin/accounts/${id}/employers`}
+    //                 actions={[
+    //                     {
+    //                         label: "Add Manager",
+    //                         fn: () => setOrganisation(id || ''),
+    //                         icon: Eye,
+    //                     },
+    //                     {
+    //                         label: "Login As Employer",
+    //                         fn: () => loginAsEmployer({ email: (rowData?.manager as ManagerInterface)?.email }),
+    //                         icon: Eye
+    //                     },
+    //                 ]}
+    //             />
+    //         );
+    //     },
+    //     header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
+    // }),
+] as ColumnDef<ITeacher>[];

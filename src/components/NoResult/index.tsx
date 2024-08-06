@@ -3,7 +3,7 @@ import HouseImg from "@/assets/logo.svg"
 import Image, { StaticImageData } from 'next/image'
 import { MdAdd } from 'react-icons/md'
 import { LineWave } from 'react-loader-spinner'
-import Button from '../Button'
+import { Button } from '../ui/button'
 
 interface IProps {
     onClick: () => void

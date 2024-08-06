@@ -8,7 +8,6 @@ const BaseService = axios.create({
     timeout: 50000,
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 'no-cache',
     },
 })
 
