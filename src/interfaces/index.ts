@@ -1,3 +1,15 @@
+export enum AccountTypeEnum {
+  school = 'School',
+  teacher = 'Teacher',
+  manager = 'Manager',
+}
+
+export enum GenderEnum {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NONE = '',
+}
+
 export interface IResponseData<T> {    
     totalItems: number
     totalPages: number
@@ -5,9 +17,23 @@ export interface IResponseData<T> {
     items: T
 }
 
+export interface IPaginatedResponse<T> {    
+    docs: T;
+    totalDocs: number;
+    offset: number;
+    limit: number;
+    totalPages: number;
+    page: number;
+    pagingCounter: number;
+    hasPrevPage: boolean;
+    hasNextPage: boolean;
+    prevPage: number;
+    nextPage: number;
+}
+
 
 export interface IReducerAction<T> {
-    type: T;
+    type: T | 'reset';
     payload?: string | { [key: string]: string };
     data?: string | { [key: string]: string };
     name?: string;
@@ -116,4 +142,44 @@ export interface ITableColumn {
 export interface ILogout { 
     refresh_token: string 
     role: string 
+}
+
+export interface ISchool {
+  name: string;
+  inceptionDate?: string;
+  location?: string;
+  owner?: string;
+}
+
+export interface IClass {
+  schoolId: string;
+  title: string;
+}
+
+export interface ITeacher {
+  _id?: string;
+  schoolId: string;
+  name: string;
+  gender?: GenderEnum;
+  email: string;
+  password: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IStudent {
+  schoolId: string;
+  name: string;
+  age: number;
+  gender: GenderEnum;
+  currentClass: string;
+  previousClasses?: string[];
+  email?: string;
+  password?: string;
+}
+
+export interface ISubject {
+  classId: string;
+  teacherId: string;
+  name: string;
 }
