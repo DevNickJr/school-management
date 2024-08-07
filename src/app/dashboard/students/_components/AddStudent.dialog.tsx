@@ -21,41 +21,43 @@ import { Label } from "@/components/ui/label";
 import React, { useReducer, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { GenderEnum, IPaginatedResponse, IReducerAction, ITeacher } from "@/interfaces";
+import { IPaginatedResponse, IReducerAction, IStudent, EducationalStage, GenderEnum, IClass } from "@/interfaces";
 import useMutate from "@/hooks/useMutate";
 import { toast } from "react-toastify";
-import { apiAddTeacher } from "@/services/TeacherServices";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Loader from "@/components/Loader";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { apiAddStudent } from "@/services/StudentService";
+import useFetch from "@/hooks/useFetch";
+import { apiGetAllClasses } from "@/services/ClassService";
 
-export interface ITeacherReducerAction extends IReducerAction<keyof ITeacher> {
-    payload: string
+export interface IStudentReducerAction extends IReducerAction<keyof IStudent> {
+    payload: string | number
 }
 
-const initialState: ITeacher = {
+const initialState: IStudent = {
+	schoolId: '',
 	name: '',
+	age: 0,
+	gender: '',
+	class: '',
 	email: '',
 	password: '',
-	gender: GenderEnum.NONE, 
-	schoolId: '',
 }
-export default function AddTeacherDialog({
+export default function AddStudentDialog({
 	children,
 	onSuccess = () => { },
 	refetch,
 }: {
 	children: ReactNode;
 	onSuccess?: () => void;
-	refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IPaginatedResponse<ITeacher[]>, Error>>;
+	refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IPaginatedResponse<IStudent[]>, Error>>;
 }) {
 	const [open, setOpen] = useState<boolean>(false);
 	const user = useAuthContext()
 	const router = useRouter();
 
-	const [isLoading, setIsLoading] = useState(false);
-
-	const [data, dispatch] = useReducer((state: ITeacher, action: ITeacherReducerAction) => {
+	const [data, dispatch] = useReducer((state: IStudent, action: IStudentReducerAction) => {
 		if (action.type === "reset") {
 			return initialState;
 		}
@@ -64,34 +66,58 @@ export default function AddTeacherDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addTeacherMutation.mutate({ ...data, schoolId: user.account || '' })
+		addStudentMutation.mutate({ ...data, schoolId: user.account || '' })
 	};
 
-	const addTeacherMutation = useMutate<ITeacher, any>(
-		apiAddTeacher,
+	const addStudentMutation = useMutate<IStudent, any>(
+		apiAddStudent,
 		{
 		  onSuccess: () => {
-			toast.success("Teacher added Successfully")
+			toast.success("Student added Successfully")
 			refetch()
 			dispatch({ type: 'reset', payload: '' })
 			setOpen(false)
 		  },
 		  showErrorMessage: true
 		}
-	  )
+	)
+
+	const { data: classes} = useFetch<IClass[]>({
+		api: apiGetAllClasses,
+		key: ["Classes"],
+		requireAuth: true
+	})
+  
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			{addTeacherMutation?.isPending && <Loader />}
+			{addStudentMutation?.isPending && <Loader />}
 			<DialogTrigger asChild>{children}</DialogTrigger>
 			<DialogContent className="sm:max-w-[525px] max-h-[90dvh] overflow-auto text-gray-800">
 				<DialogHeader>
-					<DialogTitle>Add Teacher</DialogTitle>
-					<DialogDescription>Add Teacher to your school</DialogDescription>
+					<DialogTitle>Add Student</DialogTitle>
+					<DialogDescription>Add Student to your school</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="grid gap-4 py-4 gap-x-5">
                     <div className="grid gap-4">
-                        <div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2">
+                            <Label htmlFor="Class" className="">
+                                Class
+                            </Label>
+							<Select onValueChange={(value) => dispatch({ type: "class", payload: value })} defaultValue={data.name}>
+								<SelectTrigger className="">
+									<SelectValue placeholder="" />
+								</SelectTrigger>
+								<SelectContent>
+									{
+										classes?.map(el => (
+											<SelectItem key={el._id} value={el._id!}>{el.title}</SelectItem> 
+										))
+									}
+								</SelectContent>
+							</Select>
+                        </div>
+						<div className="flex flex-col gap-2">
                             <Label htmlFor="name" className="">
                                 Name
                             </Label>
@@ -105,40 +131,26 @@ export default function AddTeacherDialog({
                             />
                         </div>
                         <div className="flex flex-col gap-2">
-                            <Label htmlFor="email" className="">
-                                Email
+                            <Label htmlFor="age" className="">
+                                Age
                             </Label>
                             <Input
-                                id="email"
-                                name="email"
-								type="email"
+                                id="age"
+                                name="age"
                                 placeholder=""
                                 className=""
-                                value={data.email}
-                                onChange={(e) => dispatch({ type: "email", payload: e.target.value })}
+                                value={data.age || ''}
+								type="number"
+                                onChange={(e) => dispatch({ type: "age", payload: Number(e.target.value) })}
                             />
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="password" className="">
-                                Password
-                            </Label>
-                            <Input
-                                id="password"
-                                name="password"
-                                placeholder=""
-                                className=""
-								type="password"
-                                value={data.password}
-                                onChange={(e) => dispatch({ type: "password", payload: e.target.value })}
-                            />
-                        </div>
-                        <div className="flex flex-col gap-2">
+						<div className="flex flex-col gap-2">
                             <Label htmlFor="gender" className="">
                                 Gender
                             </Label>
 							<Select onValueChange={(value) => dispatch({ type: "gender", payload: value })} defaultValue={data.gender}>
 								<SelectTrigger className="">
-									<SelectValue placeholder="Gender" />
+									<SelectValue placeholder="" />
 								</SelectTrigger>
 								<SelectContent>
 									{
@@ -156,9 +168,7 @@ export default function AddTeacherDialog({
                             className="text-xs font-semibold w-full max-w-[250px]"
 							type="submit"
 						>
-							{isLoading
-								? "Submiting..."
-								: "Submit"}
+							Submit
 						</Button>
 					</DialogFooter>
 				</form>

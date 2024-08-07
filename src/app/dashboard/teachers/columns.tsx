@@ -1,9 +1,10 @@
 "use client";
 import ColumnHead from "@/components/ColumnHead";
+import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ITeacher } from "@/interfaces";
+import { formatDate3 } from "@/utils/date";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
 
 const teacherColumnHelper = createColumnHelper<ITeacher>();
 
@@ -34,32 +35,20 @@ export const teacherColumnsMaker = () =>  [
     teacherColumnHelper.accessor("createdAt", {
       header: ({ column }) => <ColumnHead title="Joined Date" column={column} />,
       sortingFn: "text",
-      cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+      cell: (info) => <span className="whitespace-nowrap">{formatDate3(info.getValue()?.toString())}</span>,
     }),
-    // teacherColumnHelper.accessor(row => row, {
-    //     id: 'actions',
-    //     sortingFn: "text",
-    //     cell: (info) => {
-    //         const rowData = info.getValue()
-    //         const id = rowData?._id;
-    //         return (
-    //             <Action
-    //                 viewLink={`/admin/accounts/${id}/employers`}
-    //                 actions={[
-    //                     {
-    //                         label: "Add Manager",
-    //                         fn: () => setOrganisation(id || ''),
-    //                         icon: Eye,
-    //                     },
-    //                     {
-    //                         label: "Login As Employer",
-    //                         fn: () => loginAsEmployer({ email: (rowData?.manager as ManagerInterface)?.email }),
-    //                         icon: Eye
-    //                     },
-    //                 ]}
-    //             />
-    //         );
-    //     },
-    //     header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
-    // }),
+    teacherColumnHelper.accessor(row => row, {
+        id: 'actions',
+        sortingFn: "text",
+        cell: (info) => {
+            const rowData = info.getValue()
+            const id = rowData?._id;
+            return (
+                <Actions
+                    viewLink={`/teachers/${id}`}
+                />
+            );
+        },
+        header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
+    }),
 ] as ColumnDef<ITeacher>[];

@@ -7,7 +7,6 @@ export enum AccountTypeEnum {
 export enum GenderEnum {
   MALE = 'MALE',
   FEMALE = 'FEMALE',
-  NONE = '',
 }
 
 export interface IResponseData<T> {    
@@ -34,7 +33,7 @@ export interface IPaginatedResponse<T> {
 
 export interface IReducerAction<T> {
     type: T | 'reset';
-    payload?: string | { [key: string]: string };
+    payload?: string | number | { [key: string]: string };
     data?: string | { [key: string]: string };
     name?: string;
 }
@@ -152,15 +151,26 @@ export interface ISchool {
 }
 
 export interface IClass {
+  _id?: string;
   schoolId: string;
   title: string;
+  stage: EducationalStage | '';
+  level: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export enum EducationalStage {
+    Nursery = 'Nursery',
+    Primary = 'Primary',
+    Secondary = 'Secondary'
 }
 
 export interface ITeacher {
   _id?: string;
   schoolId: string;
   name: string;
-  gender?: GenderEnum;
+  gender?: GenderEnum | '';
   email: string;
   password: string;
   createdAt?: string;
@@ -168,14 +178,16 @@ export interface ITeacher {
 }
 
 export interface IStudent {
+  _id?: string;
   schoolId: string;
   name: string;
   age: number;
-  gender: GenderEnum;
-  currentClass: string;
-  previousClasses?: string[];
+  gender: GenderEnum | '';
+  class: string | IClass;
   email?: string;
   password?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ISubject {

@@ -1,4 +1,3 @@
-
 const months = [
     "January",
     "February",
@@ -14,29 +13,31 @@ const months = [
     "December",
   ];
 
-export const formatDate = (date: string) => {
+export const formatDate = (date: string | undefined) => {
+    if (!date) return 'N/A'
     const newDate = new Date(date);  // convert to milliseconds
     const day = newDate.getDate();
+
     const month = newDate.getMonth() + 1;
     const year = newDate.getFullYear();
-    // console.log("newDate", newDate, "day", day, "month", month, "year", year);
     if (month < 10) {
         return `${year}-0${month}-${day}`;
     }
     return `${year}-${month}-${day}`;
 };
 
-export const formatDate3 = (date: string) => {
+export const formatDate3 = (date: string | undefined) => {
+    if (!date) return 'N/A'
     const newDate = new Date(date);  // convert to milliseconds
     const day = newDate.getDate();
     const month = newDate.getMonth() + 1;
     const year = newDate.getFullYear();
-    // console.log("newDate", newDate, "day", day, "month", month, "year", year);
     return `${months[month]} ${day}, ${year}`;
 };
   
 
-export const formatDate2 = (date: string) => {
+export const formatDate2 = (date: string | undefined) => {
+    if (!date) return 'N/A'
     const newDate = new  Date(date);  // convert to milliseconds
     const day = newDate.getDate();
     const month = newDate.getMonth() + 1;
@@ -44,16 +45,9 @@ export const formatDate2 = (date: string) => {
     newDate.getTime()
     return `${day}/${month}/${year} ${newDate.getHours()}:${newDate.getMinutes()}`;
 };
-// export const formatDate = (date: string) => {
-//     const newDate = new  Date(date);  // convert to milliseconds
-//     const day = newDate.getDate();
-//     const month = newDate.getMonth() + 1;
-//     const year = newDate.getFullYear();
-//     return `${months[month-1]} ${day}, ${year}`;
-// };
 
-
-export const daysAgo = (date: string) => {
+export const daysAgo = (date: string | undefined) => {
+    if (!date) return 'N/A'
     const newDate = new Date(date); // convert to milliseconds
     const today = Date.now();
 
@@ -63,20 +57,3 @@ export const daysAgo = (date: string) => {
 
     return diffDays;
 };
-
-
-
-// export const expired = (date: number) => {
-//     if (!date) return true;
-    
-//     const newDate = new Date(date * 1000); // convert to milliseconds
-//     const today = new Date();
-
-
-//     if (newDate < today) {
-//         return true;
-//     }
-//     return false;
-// };
-  
-  
