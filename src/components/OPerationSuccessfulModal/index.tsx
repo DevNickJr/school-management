@@ -1,8 +1,8 @@
 "use client"
-import Button from '@/components/Button'
 import React from 'react'
 import SuccessImg from "@/assets/auth.png"
 import Image from 'next/image'
+import { Button } from '../ui/button'
 
 interface IProps {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -47,7 +47,7 @@ const OPerationSuccessfulModal = ({ isOpen, setIsOpen, desc }: IProps) => {
                             <h2 className='text-3xl font-bold text-black'>Added Successfully</h2>
                             <p className='mb-4 text-sm font-semibold text-[#9098A3]'>{desc}</p>
                         </div>
-                        <Button variant='wide' className='w-full max-w-56' onClick={() => setIsOpen(false)} >
+                        <Button className='w-full max-w-56' onClick={() => setIsOpen(false)} >
                             Continue
                         </Button>
                     </div>

@@ -1,9 +1,9 @@
 "use client"
-import Button from '@/components/Button'
 import React from 'react'
 import ErrorImg from "@/assets/error-icon.png"
 import Image from 'next/image'
 import { UseMutationResult } from '@tanstack/react-query'
+import { Button } from '../ui/button'
 
 interface IProps<T> {
     setIsOpen: React.Dispatch<React.SetStateAction<string>>
@@ -49,10 +49,10 @@ const DeleteItemModal = <T,>({ isOpen, setIsOpen, desc, deleteFunc }: IProps<T>)
                             <p className='mb-4 text-sm font-semibold text-[#9098A3] '>{desc}</p>
                         </div>
                         <div className="flex">
-                            <Button variant='danger' outlined className='w-full py-3 md:py-5 rounded-r-none max-w-56 bg-[#ED3A3A0D] text-black' onClick={() => setIsOpen("")} >
+                            <Button className='w-full py-3 md:py-5 rounded-r-none max-w-56 bg-[#ED3A3A0D] text-black' onClick={() => setIsOpen("")} >
                                 Cancel
                             </Button>
-                            <Button variant='danger' className='w-full py-3 rounded-l-none md:py-5 max-w-56' onClick={() => deleteFunc()} >
+                            <Button className='w-full py-3 rounded-l-none md:py-5 max-w-56' onClick={() => deleteFunc()} >
                                 Confirm
                             </Button>
                         </div>
