@@ -36,7 +36,7 @@ export interface IStudentReducerAction extends IReducerAction<keyof IStudent> {
 }
 
 const initialState: IStudent = {
-	schoolId: '',
+	school: '',
 	name: '',
 	age: 0,
 	gender: '',
@@ -66,7 +66,7 @@ export default function AddStudentDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addStudentMutation.mutate({ ...data, schoolId: user.account || '' })
+		addStudentMutation.mutate({ ...data, school: user.account || '' })
 	};
 
 	const addStudentMutation = useMutate<IStudent, any>(
