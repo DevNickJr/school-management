@@ -37,7 +37,7 @@ const initialState: IClass = {
 	title: '',
 	stage: '',
 	level: 0,
-	schoolId: '',
+	school: '',
 }
 export default function AddClassDialog({
 	children,
@@ -61,7 +61,7 @@ export default function AddClassDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addClassMutation.mutate({ ...data, schoolId: user.account || '', title: data.title || `${data.stage} ${data.level || ''}` })
+		addClassMutation.mutate({ ...data, school: user.account || '', title: data.title || `${data.stage} ${data.level || ''}` })
 	};
 
 	const addClassMutation = useMutate<IClass, any>(

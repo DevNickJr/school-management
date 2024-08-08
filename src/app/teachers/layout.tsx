@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import { toast } from 'react-toastify'
 import { useAuthContext } from '@/hooks/useAuthContext'
 import SideNav from '@/components/SideNav'
-import { navItems } from '@/constants'
+import { teacherNavItems } from '@/constants'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -15,14 +15,14 @@ const poppins = Poppins({
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 })
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => { 
+const TeacherDashboardLayout = ({ children }: { children: React.ReactNode }) => { 
   const context = useAuthContext()
 
   const router = useRouter()
 
   useEffect(() => {
-    if (!context.isLoggedIn || context.role !== "School") {
-      toast.info("Login to Access your Dashboard")
+    if (!context.isLoggedIn || context.role !== "Teacher" ) {
+      toast.info("Login as a Teacher to Access your Dashboard")
       router.push('/')
     }
   }, [context.isLoggedIn, context.role, router])
@@ -30,7 +30,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className={`flex w-full h-screen overflow-hidden font-poppins bg-white`}> 
-      <SideNav nav={navItems} />
+      <SideNav nav={teacherNavItems} />
       <div className="relative flex-1 overflow-y-auto rounded-md">
         <Header />
         <div className='h-full p-4 pt-6 md:p-8'>
@@ -41,4 +41,4 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default DashboardLayout
+export default TeacherDashboardLayout

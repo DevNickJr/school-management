@@ -21,7 +21,7 @@ import { Label } from "@/components/ui/label";
 import React, { useReducer, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { GenderEnum, IPaginatedResponse, IReducerAction, ITeacher } from "@/interfaces";
+import { GenderEnum, IPaginatedResponse, IReducerAction, IAddTeacher } from "@/interfaces";
 import useMutate from "@/hooks/useMutate";
 import { toast } from "react-toastify";
 import { apiAddTeacher } from "@/services/TeacherServices";
@@ -29,16 +29,16 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import Loader from "@/components/Loader";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
-export interface ITeacherReducerAction extends IReducerAction<keyof ITeacher> {
+
+export interface IAddTeacherReducerAction extends IReducerAction<keyof IAddTeacher> {
     payload: string
 }
 
-const initialState: ITeacher = {
+const initialState: IAddTeacher = {
 	name: '',
 	email: '',
 	password: '',
-	gender: GenderEnum.NONE, 
-	schoolId: '',
+	gender: '', 
 }
 export default function AddTeacherDialog({
 	children,
@@ -47,7 +47,7 @@ export default function AddTeacherDialog({
 }: {
 	children: ReactNode;
 	onSuccess?: () => void;
-	refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IPaginatedResponse<ITeacher[]>, Error>>;
+	refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IPaginatedResponse<IAddTeacher[]>, Error>>;
 }) {
 	const [open, setOpen] = useState<boolean>(false);
 	const user = useAuthContext()
@@ -55,7 +55,7 @@ export default function AddTeacherDialog({
 
 	const [isLoading, setIsLoading] = useState(false);
 
-	const [data, dispatch] = useReducer((state: ITeacher, action: ITeacherReducerAction) => {
+	const [data, dispatch] = useReducer((state: IAddTeacher, action: IAddTeacherReducerAction) => {
 		if (action.type === "reset") {
 			return initialState;
 		}
@@ -64,10 +64,10 @@ export default function AddTeacherDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addTeacherMutation.mutate({ ...data, schoolId: user.account || '' })
+		addTeacherMutation.mutate({ ...data })
 	};
 
-	const addTeacherMutation = useMutate<ITeacher, any>(
+	const addTeacherMutation = useMutate<IAddTeacher, any>(
 		apiAddTeacher,
 		{
 		  onSuccess: () => {
@@ -78,7 +78,7 @@ export default function AddTeacherDialog({
 		  },
 		  showErrorMessage: true
 		}
-	  )
+	)
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>

@@ -1,12 +1,13 @@
 "use client"
+import { AccountTypeEnum } from "@/interfaces";
 import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
 
 export interface IAuthContext {
     name: string | null;
     email: string | null; 
     account: string | null; 
-    isLoggedIn: boolean
-    role: string | null
+    isLoggedIn: boolean;
+    role: AccountTypeEnum | null;
     accessToken: string | null
     refreshToken: string | null
 }

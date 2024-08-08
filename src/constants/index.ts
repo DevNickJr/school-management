@@ -1,12 +1,11 @@
 // navItems.js
 import { RxDashboard } from 'react-icons/rx';
-import { LuHistory, LuRepeat } from 'react-icons/lu';
 import { FiSettings } from 'react-icons/fi';
 import { HiOutlineBanknotes } from 'react-icons/hi2';
-import { MdCenterFocusWeak, MdOutlineContactSupport, MdOutlineOtherHouses, MdOutlinePersonPin } from 'react-icons/md';
-import { CgTrack } from 'react-icons/cg';
+import { MdOutlineContactSupport, MdOutlineOtherHouses, MdOutlinePersonPin } from 'react-icons/md';
+import { INav } from '@/interfaces';
 
-const navItems =  [
+const navItems: INav[] =  [
     {
         id: 1,
         title: "",
@@ -55,8 +54,8 @@ const navItems =  [
             },
             {
                 id: 2,
-                title: "Sessions",
-                link: "/dashboard/sessions",
+                title: "Subjects",
+                link: "/dashboard/subjects",
                 Icon: MdOutlineOtherHouses,
             },
         ]
@@ -87,7 +86,42 @@ const navItems =  [
     },
 ]
 
+const teacherNavItems: INav[] =  [
+    {
+        id: 1,
+        title: "",
+        navItems: [
+            {
+                id: 1,
+                title: "Dashboard",
+                link: "/teachers",
+                Icon: RxDashboard,
+            },
+        ]
+    },
+    {
+        id: 3,
+        title: "Entities",
+        navItems: [
+            {
+                id: 1,
+                title: "Classes",
+                link: "/teachers/classes",
+                Icon: MdOutlineOtherHouses,
+            },
+            {
+                id: 2,
+                title: "Subjects",
+                link: "/teachers/subjects",
+                Icon: MdOutlineOtherHouses,
+            },
+        ]
+    },
+]
+
+
 export {
- navItems
+ navItems,
+ teacherNavItems
 }
     

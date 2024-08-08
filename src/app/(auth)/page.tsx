@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import React, { useReducer, FormEvent } from 'react'
 import { toast } from 'react-toastify'
-import { IUserLogin, ILoginReducerAction, IUserLoginResponse } from '@/interfaces'
+import { IUserLogin, ILoginReducerAction, IUserLoginResponse, AccountTypeEnum } from '@/interfaces'
 import { useRouter } from 'next/navigation'
 import useMutate from '@/hooks/useMutate'
 import { apiLogin } from '@/services/AuthService'
@@ -27,19 +27,18 @@ const Login = () => {
     apiLogin,
     {
       onSuccess: (data: IUserLoginResponse) => {
-        console.log({ data })
         dispatch({ type: "LOGIN", payload: {
           ...data,
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
         }})
         toast.success("Logged in Successfully")
-        router.push('/dashboard')
+        if (data.role === AccountTypeEnum.teacher) {
+          return router.push('/teachers')
+        }
+        return router.push('/dashboard')
       },
-      onError: (error: any) => {
-        console.log({error})
-          toast.error(error?.message || "An error occured")
-      }
+      showErrorMessage: true,
     }
   )
 

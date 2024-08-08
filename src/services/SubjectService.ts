@@ -1,8 +1,8 @@
 import { IAuthContext } from "@/providers/AuthProvider"
 import BaseService from "./BaseService"
-import { IAddTeacher, ITeacher } from "@/interfaces"
+import { ISubject } from "@/interfaces"
 
-const servicePrefix = "/teachers"
+const servicePrefix = "/subjects"
 let user: string | null = '{}'
 if (typeof window !== 'undefined') {
     user = localStorage && localStorage?.getItem('user')
@@ -15,10 +15,13 @@ const Auth = (token: string) => ({
     }
 })
 
-export const apiAddTeacher =  (data: IAddTeacher) => {
+export const apiAddSubject =  (data: ISubject) => {
     return BaseService.post(`${servicePrefix}`, data, Auth(token))
 }
 
-export const apiGetTeachers =  () => {
+export const apiGetSubjects =  () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
+}
+export const apiGetAllSubjects =  () => {
+    return BaseService.get(`${servicePrefix}/all`, Auth(token))
 }

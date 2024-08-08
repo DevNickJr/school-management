@@ -1,3 +1,17 @@
+import { IconType } from "react-icons/lib";
+
+export interface IBase {
+    _id?: string;
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export enum EducationalStage {
+    Nursery = 'Nursery',
+    Primary = 'Primary',
+    Secondary = 'Secondary'
+}
+
 export enum AccountTypeEnum {
   school = 'School',
   teacher = 'Teacher',
@@ -46,8 +60,8 @@ export interface IUserLogin {
 export interface IUserLoginResponse {
     name: string | null;
     email: string | null; 
-    account: string | null; 
-    role: string | null;
+    account: string | null;
+    role: AccountTypeEnum | null;
     access_token: string | null;
     refresh_token: string | null;
 }
@@ -143,16 +157,29 @@ export interface ILogout {
     role: string 
 }
 
-export interface ISchool {
+export interface INavItems {
+    id: number;
+    title: string;
+    link: string;
+    Icon: IconType;
+}
+
+export interface INav { 
+    id: number;
+    title: string;
+    navItems: INavItems[];
+}
+
+export interface ISchool extends IBase {
   name: string;
   inceptionDate?: string;
   location?: string;
   owner?: string;
 }
 
-export interface IClass {
+export interface IClass extends IBase {
   _id?: string;
-  schoolId: string;
+  school: string;
   title: string;
   stage: EducationalStage | '';
   level: number;
@@ -160,38 +187,29 @@ export interface IClass {
   updatedAt?: string;
 }
 
-export enum EducationalStage {
-    Nursery = 'Nursery',
-    Primary = 'Primary',
-    Secondary = 'Secondary'
-}
 
-export interface ITeacher {
-  _id?: string;
-  schoolId: string;
+export interface ITeacher extends IBase {
+  school: string;
   name: string;
   gender?: GenderEnum | '';
   email: string;
   password: string;
-  createdAt?: string;
-  updatedAt?: string;
 }
+export interface IAddTeacher extends Omit<ITeacher, "school"> {}
 
-export interface IStudent {
-  _id?: string;
-  schoolId: string;
+export interface IStudent extends IBase {
+  school: string;
   name: string;
   age: number;
   gender: GenderEnum | '';
   class: string | IClass;
   email?: string;
   password?: string;
-  createdAt?: string;
-  updatedAt?: string;
 }
 
-export interface ISubject {
-  classId: string;
-  teacherId: string;
-  name: string;
+export interface ISubject extends IBase {
+    title: string;
+    school: string;
+//   classId: string;
+//   teacherId: string;
 }
