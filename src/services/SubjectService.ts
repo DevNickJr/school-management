@@ -22,6 +22,7 @@ export const apiAddSubject =  (data: ISubject) => {
 export const apiGetSubjects =  () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
 }
+
 export const apiGetAllSubjects =  () => {
     return BaseService.get(`${servicePrefix}/all`, Auth(token))
 }

@@ -2,31 +2,41 @@
 import ColumnHead from "@/components/ColumnHead";
 import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ISubject } from "@/interfaces";
+import { IClassSubject } from "@/interfaces";
 import { formatDate3 } from "@/utils/date";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
-const subjectColumnnHelper = createColumnHelper<ISubject>();
+const classSubjectColumnnHelper = createColumnHelper<IClassSubject>();
 
-export const subjectColumnnsMaker = () =>  [
-    subjectColumnnHelper.accessor("_id", {
+export const classSubjectColumnnsMaker = () =>  [
+    classSubjectColumnnHelper.accessor("_id", {
         header: ({ column }) => <ColumnHead title="" column={column} />,
         sortingFn: "text",
         cell: (info) => <div>
             <Checkbox className="w-3.5 h-3.5" />
         </div>,
     }),
-    subjectColumnnHelper.accessor("title", {
-        header: ({ column }) => <ColumnHead title="Title" column={column} />,
+    // classSubjectColumnnHelper.accessor("class", {
+    //     header: ({ column }) => <ColumnHead title="Class" column={column} />,
+    //     sortingFn: "text",
+    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    // }),
+    classSubjectColumnnHelper.accessor("subject.title", {
+        header: ({ column }) => <ColumnHead title="Subject" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
-    subjectColumnnHelper.accessor("createdAt", {
+    classSubjectColumnnHelper.accessor("teacher.name", {
+        header: ({ column }) => <ColumnHead title="Teacher" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    classSubjectColumnnHelper.accessor("createdAt", {
       header: ({ column }) => <ColumnHead title="Created At" column={column} />,
       sortingFn: "text",
       cell: (info) => <span className="whitespace-nowrap">{formatDate3(info.getValue()?.toString())}</span>,
     }),
-    subjectColumnnHelper.accessor(row => row, {
+    classSubjectColumnnHelper.accessor(row => row, {
         id: 'actions',
         sortingFn: "text",
         cell: (info) => {
@@ -34,22 +44,10 @@ export const subjectColumnnsMaker = () =>  [
             const id = rowData?._id;
             return (
                 <Actions
-                    viewLink={`/classes/${id}`}
-                    // actions={[
-                    //     {
-                    //         label: "Add Manager",
-                    //         fn: () => setOrganisation(id || ''),
-                    //         icon: Eye,
-                    //     },
-                    //     {
-                    //         label: "Login As Employer",
-                    //         fn: () => loginAsEmployer({ email: (rowData?.manager as ManagerInterface)?.email }),
-                    //         icon: Eye
-                    //     },
-                    // ]}
+                    viewLink={`/dashboard/classes/${id}`}
                 />
             );
         },
         header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
     }),
-] as ColumnDef<ISubject>[];
+] as ColumnDef<IClassSubject>[];

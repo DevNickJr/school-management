@@ -32,7 +32,7 @@ export const classColumnnsMaker = () =>  [
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
     classColumnnHelper.accessor("createdAt", {
-      header: ({ column }) => <ColumnHead title="Date Joined" column={column} />,
+      header: ({ column }) => <ColumnHead title="Created At" column={column} />,
       sortingFn: "text",
       cell: (info) => <span className="whitespace-nowrap">{formatDate3(info.getValue()?.toString())}</span>,
     }),
@@ -44,19 +44,7 @@ export const classColumnnsMaker = () =>  [
             const id = rowData?._id;
             return (
                 <Actions
-                    viewLink={`/classes/${id}`}
-                    // actions={[
-                    //     {
-                    //         label: "Add Manager",
-                    //         fn: () => setOrganisation(id || ''),
-                    //         icon: Eye,
-                    //     },
-                    //     {
-                    //         label: "Login As Employer",
-                    //         fn: () => loginAsEmployer({ email: (rowData?.manager as ManagerInterface)?.email }),
-                    //         icon: Eye
-                    //     },
-                    // ]}
+                    viewLink={`/dashboard/classes/${id}`}
                 />
             );
         },

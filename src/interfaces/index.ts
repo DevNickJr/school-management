@@ -213,3 +213,15 @@ export interface ISubject extends IBase {
 //   classId: string;
 //   teacherId: string;
 }
+
+export interface IAddClassSubject extends IBase {
+    class: string;
+    subject: string;
+    teacher: string;
+}
+
+export interface IClassSubject extends IBase {
+    class: string;
+    subject: ISubject;
+    teacher: ITeacher;
+}

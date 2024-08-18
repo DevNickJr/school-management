@@ -22,3 +22,7 @@ export const apiAddTeacher =  (data: IAddTeacher) => {
 export const apiGetTeachers =  () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
 }
+
+export const apiGetAllTeachers  =  () => {
+    return BaseService.get(`${servicePrefix}/all`, Auth(token))
+}
