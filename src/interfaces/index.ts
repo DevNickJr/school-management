@@ -202,7 +202,7 @@ export interface IStudent extends IBase {
   name: string;
   age: number;
   gender: GenderEnum | '';
-  class: string | IClass;
+  currentClass: string | IClass;
   email?: string;
   password?: string;
 }
@@ -213,6 +213,14 @@ export interface ISubject extends IBase {
 //   classId: string;
 //   teacherId: string;
 }
+
+export interface IAcademicYear extends IBase {
+    school?: string;
+    startYear: number;
+    endYear: number;
+    isActive?: boolean;
+}
+
 
 export interface IAddClassSubject extends IBase {
     class: string;

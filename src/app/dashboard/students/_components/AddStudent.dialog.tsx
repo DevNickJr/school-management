@@ -40,7 +40,7 @@ const initialState: IStudent = {
 	name: '',
 	age: 0,
 	gender: '',
-	class: '',
+	currentClass: '',
 	email: '',
 	password: '',
 }
@@ -104,7 +104,7 @@ export default function AddStudentDialog({
                             <Label htmlFor="Class" className="">
                                 Class
                             </Label>
-							<Select onValueChange={(value) => dispatch({ type: "class", payload: value })} defaultValue={data.name}>
+							<Select onValueChange={(value) => dispatch({ type: "currentClass", payload: value })} defaultValue={data.name}>
 								<SelectTrigger className="">
 									<SelectValue placeholder="" />
 								</SelectTrigger>

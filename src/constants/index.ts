@@ -48,12 +48,18 @@ const navItems: INav[] =  [
         navItems: [
             {
                 id: 1,
+                title: "Academic Year",
+                link: "/dashboard/academic-year",
+                Icon: MdOutlineOtherHouses,
+            },
+            {
+                id: 2,
                 title: "Classes",
                 link: "/dashboard/classes",
                 Icon: MdOutlineOtherHouses,
             },
             {
-                id: 2,
+                id: 3,
                 title: "Subjects",
                 link: "/dashboard/subjects",
                 Icon: MdOutlineOtherHouses,

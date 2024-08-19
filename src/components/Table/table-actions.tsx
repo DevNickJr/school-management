@@ -3,6 +3,7 @@ import { Eye, EllipsisVertical, LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, ReactNode, RefAttributes } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import Link from "next/link";
+import { IconType } from "react-icons/lib";
 
 export default function Actions<T,>({
     viewLink,
@@ -15,7 +16,7 @@ export default function Actions<T,>({
         element?: ReactNode;
         label?: string;
         fn?: () => void;
-        icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>;
+        icon?: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>> | IconType;
     }[]
 }) {
     return (
@@ -30,7 +31,7 @@ export default function Actions<T,>({
                     !!viewLink &&
                     <DropdownMenuItem className="flex gap-2 p-1">
                         <MenuItem>
-                            <Link onClick={() => viewFunction && viewFunction()} href={viewLink} className="flex items-center gap-2 w-full">
+                            <Link onClick={() => viewFunction && viewFunction()} href={viewLink} className="flex items-center w-full gap-2">
                                 <div className="flex items-center justify-center w-5 h-5 rounded-full">
                                     <Eye size={'1.1rem'} className="text-primary group-hover:text-white" />
                                 </div>
@@ -73,7 +74,7 @@ const MenuItem = ({
 }: {
     children: ReactNode;
 }) => {
-   return <div className="cursor-pointer text-black rounded-md hover:bg-primary hover:text-white flex gap-2 p-1 w-full group">
+   return <div className="flex w-full gap-2 p-1 text-black rounded-md cursor-pointer hover:bg-primary hover:text-white group">
         {children}
     </div> 
 }
