@@ -42,6 +42,10 @@ export const apiGetClassSubjects =  ({ id }: { id: string }) => {
     return BaseService.get(`${subjectPrefix}/${id}`, Auth(token))
 }
 
+export const apiGetTeacherSubjects =  ({ teacherId }: { teacherId: string }) => {
+    return BaseService.get(`${subjectPrefix}/teachers/${teacherId}`, Auth(token))
+}
+
 export const apiAddStudent =  (data: IStudent) => {
     return BaseService.post(`${studentPrefix}`, data, Auth(token))
 }

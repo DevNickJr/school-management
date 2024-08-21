@@ -64,7 +64,7 @@ const SideNav = ({ nav }: { nav: INav[] }) => {
                         <p className='text-xs text-black/70'>{context.role} Account</p>
                     </div>
                 </div>
-                <div className='h-full overflow-scroll text-sm pb-52 font-inter flex flex-col justify-between'>
+                <div className='flex flex-col justify-between h-full overflow-scroll text-sm pb-52 font-inter'>
                     <div className="">
                         {
                             nav?.map((navSection, index) => (
@@ -76,7 +76,7 @@ const SideNav = ({ nav }: { nav: INav[] }) => {
                                     <div className='flex flex-col gap-3'>
                                         {
                                             navSection.navItems?.map((navItem, index) => (
-                                                <Link key={navItem.id} href={navItem.link} className={`flex items-center gap-3 cursor-pointer rounded-md px-4 py-2.5 whitespace-nowrap ${collapse ? "justify-center" : ""} ${(pathname.includes(navItem.link) && navItem.link !== "/dashboard") ? "bg-primary text-white font-semibold" : (pathname==="/dashboard" && navItem.link==="/dashboard") ? "bg-primary text-white font-semibold" : ""}`}>
+                                                <Link key={navItem.id} href={navItem.link} className={`flex items-center gap-3 cursor-pointer rounded-md px-4 py-2.5 whitespace-nowrap ${collapse ? "justify-center" : ""} ${(pathname.includes(navItem.link) && !navItem.root) ? "bg-primary text-white font-semibold" : ((pathname==="/dashboard" || pathname==="/teachers") && !!navItem.root) ? "bg-primary text-white font-semibold" : ""}`}>
                                                     <div>
                                                         <navItem.Icon className={"text-lg"} />
                                                     </div>
