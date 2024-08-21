@@ -5,10 +5,10 @@ import Image from 'next/image'
 import Links from './Links'
 import Profile from "@/assets/logo.svg"
 import AcademicYearSwitcher from '../AcademicYearSwitcher'
+import { INav } from '@/interfaces'
 
-const Header = () => {
+const Header = ({ nav }: { nav: INav[] })  => {
   const [isOpen, setIsOpen] = React.useState(false)
-
 
   return (
     <div className='sticky top-0 left-0 z-30 flex flex-col w-full bg-white shadow'>
@@ -26,7 +26,7 @@ const Header = () => {
           {/* <Image src={Profile} alt={""} className='hidden w-12 h-12 rounded-md cursor-pointer md:block' /> */}
         </div>
       </div>
-      <Links setIsOpen={setIsOpen} isOpen={isOpen} />
+      <Links setIsOpen={setIsOpen} isOpen={isOpen} nav={nav} />
     </div>
   )
 }

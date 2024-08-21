@@ -15,6 +15,7 @@ const navItems: INav[] =  [
                 title: "Dashboard",
                 link: "/dashboard",
                 Icon: MdOutlinePersonPin,
+                root: true,
             },
         ]
     },
@@ -102,6 +103,7 @@ const teacherNavItems: INav[] =  [
                 title: "Dashboard",
                 link: "/teachers",
                 Icon: RxDashboard,
+                root: true,
             },
         ]
     },

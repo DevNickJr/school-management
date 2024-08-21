@@ -32,7 +32,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <div className={`flex w-full h-screen overflow-hidden font-poppins bg-white`}> 
       <SideNav nav={navItems} />
       <div className="relative flex-1 overflow-y-auto rounded-md">
-        <Header />
+        <Header nav={navItems} />
         <div className='h-full p-4 pt-6 md:p-8'>
           {children}
         </div>

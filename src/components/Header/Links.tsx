@@ -1,6 +1,5 @@
-import { navItems } from '@/constants'
 import { useAuthContext } from '@/hooks/useAuthContext'
-import { ILogout } from '@/interfaces'
+import { ILogout, INav } from '@/interfaces'
 import { apiLogout } from '@/services/AuthService'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -14,9 +13,10 @@ import LogoutModal from '../LogoutModal.tsx'
 interface IProps {
     isOpen: boolean, 
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    nav: INav[];
 }
 
-const Links = ({ isOpen, setIsOpen }: IProps) => {
+const Links = ({ isOpen, setIsOpen, nav }: IProps) => {
     const [logoutModalIsOpen, setLogoutModalOpen] = useState(false)
     const [collapse, setCollapse] = useState(false)
     const pathname = usePathname();
@@ -65,8 +65,8 @@ const Links = ({ isOpen, setIsOpen }: IProps) => {
                     </div>
                     <div className='h-full overflow-scroll text-sm pb-52 font-inter'>
                     {
-                                navItems?.map((navSection, index) => (
-                                    <div key={navSection.id} className={`${collapse ? "" : index===navItems.length-1 ? "" : "border-b mb-6 pb-5"} px-4`}>
+                                nav?.map((navSection, index) => (
+                                    <div key={navSection.id} className={`${collapse ? "" : index===nav.length-1 ? "" : "border-b mb-6 pb-5"} px-4`}>
                                         {
                                             navSection.title &&
                                                 <h4 className={`${collapse ? "invisible" : ""} mb-5 text-xs uppercase`}>{navSection.title}</h4>
