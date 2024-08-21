@@ -26,6 +26,12 @@ export const apiGetAcademicYears = () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
 }
 
+
+export const apiGetAllAcademicYears =  () => {
+    return BaseService.get(`${servicePrefix}/all`, Auth(token))
+}
+
+
 // Get the active academic year
 export const apiGetActiveAcademicYear = () => {
     return BaseService.get(`${servicePrefix}/active`, Auth(token))
