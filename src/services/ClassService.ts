@@ -1,8 +1,11 @@
 import { IAuthContext } from "@/providers/AuthProvider"
 import BaseService from "./BaseService"
-import { IAddClassSubject, IClass } from "@/interfaces"
+import { IAddClassSubject, IClass, IStudent } from "@/interfaces"
 
 const servicePrefix = "/classes"
+const studentPrefix = "/class-students"
+const subjectPrefix = "/class-subjects"
+
 let user: string | null = '{}'
 if (typeof window !== 'undefined') {
     user = localStorage && localStorage?.getItem('user')
@@ -32,9 +35,17 @@ export const apiGetAllClasses =  () => {
 }
 
 export const apiAddSubjectToClass =  (data: IAddClassSubject) => {
-    return BaseService.post(`class-subjects`, data, Auth(token))
+    return BaseService.post(`${subjectPrefix}`, data, Auth(token))
 }
 
 export const apiGetClassSubjects =  ({ id }: { id: string }) => {
-    return BaseService.get(`class-subjects/${id}`, Auth(token))
+    return BaseService.get(`${subjectPrefix}/${id}`, Auth(token))
+}
+
+export const apiAddStudent =  (data: IStudent) => {
+    return BaseService.post(`${studentPrefix}`, data, Auth(token))
+}
+
+export const apiGetClassStudents =  ({ id, academicYear }: { id: string; academicYear: string }) => {
+    return BaseService.get(`${studentPrefix}/${id}/${academicYear}`, Auth(token))
 }

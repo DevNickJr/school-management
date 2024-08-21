@@ -27,9 +27,8 @@ import { toast } from "react-toastify";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Loader from "@/components/Loader";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import { apiAddStudent } from "@/services/StudentService";
 import useFetch from "@/hooks/useFetch";
-import { apiGetAllClasses } from "@/services/ClassService";
+import { apiAddStudent, apiGetAllClasses } from "@/services/ClassService";
 
 export interface IStudentReducerAction extends IReducerAction<keyof IStudent> {
     payload: string | number

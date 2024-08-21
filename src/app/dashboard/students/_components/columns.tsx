@@ -31,10 +31,10 @@ export const studentColumnnsMaker = () =>  [
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
-    studentColumnnHelper.accessor("class", {
+    studentColumnnHelper.accessor("currentClass", {
         header: ({ column }) => <ColumnHead title="Class" column={column} />,
         sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IClass).title}</span>,
+        cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IClass)?.title}</span>,
     }),
     studentColumnnHelper.accessor("createdAt", {
       header: ({ column }) => <ColumnHead title="Date Joined" column={column} />,
