@@ -8,6 +8,7 @@ export interface IAuthContext {
     account: string | null; 
     isLoggedIn: boolean;
     role: AccountTypeEnum | null;
+    academicYear: string | null
     accessToken: string | null
     refreshToken: string | null
 }
@@ -43,6 +44,7 @@ const initAuthContext: IAuthContextProvider = {
     email: null, 
     account: null, 
     isLoggedIn: false,
+    academicYear: null,
     accessToken: null,
     refreshToken: null,
     role: null,
@@ -59,6 +61,7 @@ export const authReducer = (state: IAuthContext, action: IAction) => {
             const authUser = {
                 isLoggedIn: true,
                 accessToken: action?.payload?.accessToken || null,
+                academicYear: action?.payload?.academicYear || null,
                 refreshToken: action?.payload?.refreshToken || null,
                 role: action?.payload?.role || null,
                 name: action?.payload?.name || null,

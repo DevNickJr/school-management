@@ -27,10 +27,12 @@ const Login = () => {
     apiLogin,
     {
       onSuccess: (data: IUserLoginResponse) => {
+        console.log({ data })
         dispatch({ type: "LOGIN", payload: {
           ...data,
-          accessToken: data.access_token,
-          refreshToken: data.refresh_token,
+          academicYear: data.academicYear,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
         }})
         toast.success("Logged in Successfully")
         if (data.role === AccountTypeEnum.teacher) {

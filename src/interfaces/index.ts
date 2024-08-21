@@ -62,8 +62,9 @@ export interface IUserLoginResponse {
     email: string | null; 
     account: string | null;
     role: AccountTypeEnum | null;
-    access_token: string | null;
-    refresh_token: string | null;
+    accessToken: string | null;
+    academicYear: string | null;
+    refreshToken: string | null;
 }
 
 export interface IForgotPassword { 
@@ -232,4 +233,10 @@ export interface IClassSubject extends IBase {
     class: string;
     subject: ISubject;
     teacher: ITeacher;
+}
+
+export interface IClassStudent extends IBase {
+    class: string;
+    student: IStudent;
+    academicYear: IAcademicYear;
 }
