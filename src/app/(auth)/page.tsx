@@ -30,6 +30,7 @@ const Login = () => {
         console.log({ data })
         dispatch({ type: "LOGIN", payload: {
           ...data,
+          accountId: data.accountId,
           academicYear: data.academicYear,
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,

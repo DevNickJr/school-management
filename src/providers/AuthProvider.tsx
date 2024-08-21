@@ -3,9 +3,10 @@ import { AccountTypeEnum } from "@/interfaces";
 import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
 
 export interface IAuthContext {
+    accountId: string | null;
     name: string | null;
     email: string | null; 
-    account: string | null; 
+    school: string | null; 
     isLoggedIn: boolean;
     role: AccountTypeEnum | null;
     academicYear: string | null
@@ -20,9 +21,10 @@ if (typeof window !== "undefined" && localStorage) {
 }
 
 const initialState: IAuthContext = user ? JSON.parse(user) : {
+    accountId: null,
     name: null,
     email: null, 
-    account: null, 
+    school: null, 
     isLoggedIn: false,
     accessToken: null,
     refreshToken: null,
@@ -40,9 +42,10 @@ interface IAuthContextProvider extends IAuthContext {
 
 
 const initAuthContext: IAuthContextProvider = {
+    accountId: null,
     name: null,
     email: null, 
-    account: null, 
+    school: null, 
     isLoggedIn: false,
     academicYear: null,
     accessToken: null,
@@ -64,9 +67,10 @@ export const authReducer = (state: IAuthContext, action: IAction) => {
                 academicYear: action?.payload?.academicYear || null,
                 refreshToken: action?.payload?.refreshToken || null,
                 role: action?.payload?.role || null,
+                accountId: action?.payload?.accountId || null,
                 name: action?.payload?.name || null,
                 email: action?.payload?.email || null,
-                account: action?.payload?.account || null,
+                school: action?.payload?.school || null,
             }
             localStorage.setItem("user", JSON.stringify(authUser))
             return authUser

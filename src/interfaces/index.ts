@@ -58,13 +58,16 @@ export interface IUserLogin {
 }
 
 export interface IUserLoginResponse {
+    _id: string | null;
+    accountId: string | null;
+    school: string | null;
     name: string | null;
     email: string | null; 
-    account: string | null;
     role: AccountTypeEnum | null;
     accessToken: string | null;
     academicYear: string | null;
     refreshToken: string | null;
+
 }
 
 export interface IForgotPassword { 
@@ -163,6 +166,7 @@ export interface INavItems {
     title: string;
     link: string;
     Icon: IconType;
+    root?: boolean;
 }
 
 export interface INav { 
@@ -230,9 +234,9 @@ export interface IAddClassSubject extends IBase {
 }
 
 export interface IClassSubject extends IBase {
-    class: string;
-    subject: ISubject;
-    teacher: ITeacher;
+    class: string | IClass;
+    subject: string | ISubject;
+    teacher: string | ITeacher;
 }
 
 export interface IClassStudent extends IBase {
