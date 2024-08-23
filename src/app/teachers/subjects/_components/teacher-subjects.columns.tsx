@@ -44,7 +44,7 @@ export const teacherSubjectsColumnnsMaker = () =>  [
             const id = rowData?._id;
             return (
                 <Actions
-                    viewLink={`/dashboard/classes/${id}`}
+                    viewLink={`/teachers/subjects/${id}`}
                 />
             );
         },
