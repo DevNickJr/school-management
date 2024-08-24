@@ -1,9 +1,7 @@
 import React from 'react'
 import { BiMenu } from 'react-icons/bi'
 import { MdOutlineClose } from 'react-icons/md'
-import Image from 'next/image'
 import Links from './Links'
-import Profile from "@/assets/logo.svg"
 import AcademicYearSwitcher from '../AcademicYearSwitcher'
 import { INav } from '@/interfaces'
 import TermSwitcher from '../TermSwitcher'

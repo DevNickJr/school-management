@@ -7,10 +7,12 @@ import { IconType } from "react-icons/lib";
 
 export default function Actions<T,>({
     viewLink,
+    viewLabel="View",
     actions,
     viewFunction,
 }: {
     viewLink?: string;
+    viewLabel?: string;
     viewFunction?: () => void;
     actions?: {
         element?: ReactNode;
@@ -35,7 +37,7 @@ export default function Actions<T,>({
                                 <div className="flex items-center justify-center w-5 h-5 rounded-full">
                                     <Eye size={'1.1rem'} className="text-primary group-hover:text-white" />
                                 </div>
-                                <p>View</p>
+                                <p>{viewLabel}</p>
                             </Link>
                         </MenuItem>
                     </DropdownMenuItem>

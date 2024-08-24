@@ -1,6 +1,6 @@
 import { IAuthContext } from "@/providers/AuthProvider"
 import BaseService from "./BaseService"
-import { IAddClassSubject, IClass, IStudent } from "@/interfaces"
+import { IAddClassSubject, IAssignFormTeacher, IClass, IStudent } from "@/interfaces"
 
 const servicePrefix = "/classes"
 // const studentPrefix = "/class-students"
@@ -22,8 +22,16 @@ export const apiAddClass =  (data: IClass) => {
     return BaseService.post(`${servicePrefix}`, data, Auth(token))
 }
 
+export const apiAssignFormTeacher =  ({ id, formTeacher }: IAssignFormTeacher) => {
+    return BaseService.patch(`${servicePrefix}/${id}/assign/${formTeacher}`, {}, Auth(token))
+}
+
 export const apiGetClasses =  () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
+}
+
+export const apiGetTeacherClasses =  () => {
+    return BaseService.get(`${servicePrefix}/teachers`, Auth(token))
 }
 
 export const apiGetClass =  ({ id }: { id: string }) => {

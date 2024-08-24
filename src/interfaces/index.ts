@@ -185,6 +185,7 @@ export interface ISchool extends IBase {
 export interface IClass extends IBase {
   _id?: string;
   school: string;
+  formTeacher?: string | ITeacher;
   title: string;
   stage: EducationalStage | '';
   level: number;
@@ -192,6 +193,10 @@ export interface IClass extends IBase {
   updatedAt?: string;
 }
 
+export interface IAssignFormTeacher {
+    id: string; 
+    formTeacher: string;
+}
 
 export interface ITeacher extends IBase {
   school: string;
