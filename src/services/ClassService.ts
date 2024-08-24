@@ -3,8 +3,8 @@ import BaseService from "./BaseService"
 import { IAddClassSubject, IClass, IStudent } from "@/interfaces"
 
 const servicePrefix = "/classes"
-const studentPrefix = "/class-students"
-const subjectPrefix = "/class-subjects"
+// const studentPrefix = "/class-students"
+// const subjectPrefix = "/class-subjects"
 
 let user: string | null = '{}'
 if (typeof window !== 'undefined') {
@@ -35,21 +35,25 @@ export const apiGetAllClasses =  () => {
 }
 
 export const apiAddSubjectToClass =  (data: IAddClassSubject) => {
-    return BaseService.post(`${subjectPrefix}`, data, Auth(token))
+    return BaseService.post(`${servicePrefix}/subjects`, data, Auth(token))
 }
 
 export const apiGetClassSubjects =  ({ id }: { id: string }) => {
-    return BaseService.get(`${subjectPrefix}/${id}`, Auth(token))
+    return BaseService.get(`${servicePrefix}/${id}/subjects`, Auth(token))
+}
+
+export const apiGetClassSubject =  ({ id }: { id: string }) => {
+    return BaseService.get(`${servicePrefix}/subjects/${id}`, Auth(token))
 }
 
 export const apiGetTeacherSubjects =  ({ teacherId }: { teacherId: string }) => {
-    return BaseService.get(`${subjectPrefix}/teachers/${teacherId}`, Auth(token))
+    return BaseService.get(`${servicePrefix}/teachers/${teacherId}/subjects`, Auth(token))
 }
 
 export const apiAddStudent =  (data: IStudent) => {
-    return BaseService.post(`${studentPrefix}`, data, Auth(token))
+    return BaseService.post(`${servicePrefix}/students`, data, Auth(token))
 }
 
 export const apiGetClassStudents =  ({ id, academicYear }: { id: string; academicYear: string }) => {
-    return BaseService.get(`${studentPrefix}/${id}/${academicYear}`, Auth(token))
+    return BaseService.get(`${servicePrefix}/${id}/students/academic-year/${academicYear}`, Auth(token))
 }
