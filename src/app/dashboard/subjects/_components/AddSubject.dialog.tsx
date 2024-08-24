@@ -52,7 +52,7 @@ export default function AddSubjectDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addSubjectMutation.mutate({ ...data, school: user.account || ''})
+		addSubjectMutation.mutate({ ...data, school: user.school || ''})
 	};
 
 	const addSubjectMutation = useMutate<ISubject, any>(

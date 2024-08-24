@@ -53,7 +53,7 @@ export default function AddAcademicYearDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addAcademicYearMutation.mutate({ ...data, school: user.account || ''})
+		addAcademicYearMutation.mutate({ ...data, school: user.school || ''})
 	};
 
 	const addAcademicYearMutation = useMutate<IAcademicYear, any>(

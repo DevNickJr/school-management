@@ -59,6 +59,7 @@ export interface IUserLogin {
 
 export interface IUserLoginResponse {
     _id: string | null;
+    term: string | null;
     accountId: string | null;
     school: string | null;
     name: string | null;
