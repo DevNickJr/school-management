@@ -26,8 +26,8 @@ const AcademicYearSwitcher = ({ showLabel=false }: { showLabel?: boolean }) => {
     <div className="flex flex-col gap-2">
       {
         showLabel &&
-        <Label htmlFor="stage" className="">
-            Stage
+        <Label htmlFor="Session" className="">
+            Session
         </Label>
       }
       <Select 
@@ -41,7 +41,7 @@ const AcademicYearSwitcher = ({ showLabel=false }: { showLabel?: boolean }) => {
         defaultValue={context.academicYear || ''}
       >
         <SelectTrigger className="">
-          <SelectValue placeholder="Stage" />
+          <SelectValue placeholder="Session" />
         </SelectTrigger>
         <SelectContent>
           {

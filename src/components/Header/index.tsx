@@ -6,6 +6,7 @@ import Links from './Links'
 import Profile from "@/assets/logo.svg"
 import AcademicYearSwitcher from '../AcademicYearSwitcher'
 import { INav } from '@/interfaces'
+import TermSwitcher from '../TermSwitcher'
 
 const Header = ({ nav }: { nav: INav[] })  => {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -18,7 +19,7 @@ const Header = ({ nav }: { nav: INav[] })  => {
         </h1>
         <div className='flex items-center gap-4'>
           <AcademicYearSwitcher />
-
+          <TermSwitcher />
           { isOpen ? 
             <MdOutlineClose onClick={() => setIsOpen(false)} className={`cursor-pointer text-3xl md:hidden relative z-50 text-gray-dark`} /> 
             : <BiMenu onClick={() => setIsOpen(true)} className='relative z-50 text-3xl cursor-pointer md:hidden text-gray-dark' />

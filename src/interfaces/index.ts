@@ -244,3 +244,15 @@ export interface IClassStudent extends IBase {
     student: IStudent;
     academicYear: IAcademicYear;
 }
+
+
+export interface IScore extends IBase {
+    classStudent: string | IClassStudent;
+    classSubject: string | IClassSubject;
+    academicYear: string | IAcademicYear;
+    term: string;
+    CA: number;
+    exam: number;
+    total?: number;
+    remark?: string;
+}
