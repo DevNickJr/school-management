@@ -65,7 +65,7 @@ export default function AddStudentDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addStudentMutation.mutate({ ...data, school: user.account || '' })
+		addStudentMutation.mutate({ ...data, school: user.school || '' })
 	};
 
 	const addStudentMutation = useMutate<IStudent, any>(
