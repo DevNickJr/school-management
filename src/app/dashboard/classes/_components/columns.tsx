@@ -2,13 +2,18 @@
 import ColumnHead from "@/components/ColumnHead";
 import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { IClass } from "@/interfaces";
+import { IAssignFormTeacher, IClass, ITeacher } from "@/interfaces";
 import { formatDate3 } from "@/utils/date";
+import { UseMutationResult } from "@tanstack/react-query";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 const classColumnnHelper = createColumnHelper<IClass>();
 
-export const classColumnnsMaker = () =>  [
+export const classColumnnsMaker = ({
+    setClassId,
+}: {
+    setClassId: React.Dispatch<React.SetStateAction<string>>
+}) =>  [
     classColumnnHelper.accessor("_id", {
         header: ({ column }) => <ColumnHead title="" column={column} />,
         sortingFn: "text",
@@ -20,6 +25,11 @@ export const classColumnnsMaker = () =>  [
         header: ({ column }) => <ColumnHead title="Title" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    classColumnnHelper.accessor("formTeacher", {
+        header: ({ column }) => <ColumnHead title="Form Teacher" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as ITeacher)?.name}</span>,
     }),
     classColumnnHelper.accessor("stage", {
         header: ({ column }) => <ColumnHead title="Stage" column={column} />,
@@ -45,6 +55,13 @@ export const classColumnnsMaker = () =>  [
             return (
                 <Actions
                     viewLink={`/dashboard/classes/${id}`}
+                    viewLabel="Manage"
+                    actions={[
+                        {
+                            label: "Form Teacher",
+                            fn: () => setClassId(id || '')
+                        }
+                    ]}
                 />
             );
         },

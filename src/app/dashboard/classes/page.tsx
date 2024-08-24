@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { usePagination } from '@/hooks/usePagination'
 import { useSorting } from '@/hooks/useSorting'
 import HouseImg from "@/assets/auth.png"
@@ -12,11 +12,13 @@ import { classColumnnsMaker } from './_components/columns'
 import DataTable from '@/components/Table/data-table'
 import AddClassDialog from './_components/AddClass.dialog'
 import { apiGetClasses } from '@/services/ClassService'
+import AssignFormTeacherDialog from './_components/AssignFormTeacher'
 
 
 const Classes = () => {
   const { limit, onPaginationChange, page, pagination } = usePagination();
   const { sorting, onSortingChange, field, order } = useSorting();
+  const [classId, setClassId] = useState('')
   
   const { data: classes, error, isLoading, isFetching, refetch, fetchStatus } = useFetch<IPaginatedResponse<IClass[]>>({
       api: apiGetClasses,
@@ -28,10 +30,17 @@ const Classes = () => {
       requireAuth: true
   })
 
-  const columns = classColumnnsMaker()
+
+  const columns = classColumnnsMaker({ setClassId })
 
   return (
     <div className=''>
+        <AssignFormTeacherDialog
+            open={!!classId}
+            setOpen={() => setClassId('')}
+            id={classId}
+            refetch={refetch}
+        />
         <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
             <h2 className='text-3xl font-bold text-black/80'>Classes</h2>
             <AddClassDialog refetch={refetch}>

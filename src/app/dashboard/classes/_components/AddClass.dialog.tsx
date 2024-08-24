@@ -21,13 +21,15 @@ import { Label } from "@/components/ui/label";
 import React, { useReducer, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { IPaginatedResponse, IReducerAction, IClass, EducationalStage } from "@/interfaces";
+import { IPaginatedResponse, IReducerAction, IClass, EducationalStage, ITeacher } from "@/interfaces";
 import useMutate from "@/hooks/useMutate";
 import { toast } from "react-toastify";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import Loader from "@/components/Loader";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { apiAddClass } from "@/services/ClassService";
+import useFetch from "@/hooks/useFetch";
+import { apiGetAllTeachers } from "@/services/TeacherServices";
 
 export interface IClassReducerAction extends IReducerAction<keyof IClass> {
     payload: string | number
@@ -35,6 +37,7 @@ export interface IClassReducerAction extends IReducerAction<keyof IClass> {
 
 const initialState: IClass = {
 	title: '',
+	formTeacher: '',
 	stage: '',
 	level: 0,
 	school: '',
@@ -50,7 +53,6 @@ export default function AddClassDialog({
 }) {
 	const [open, setOpen] = useState<boolean>(false);
 	const user = useAuthContext()
-	const router = useRouter();
 
 	const [data, dispatch] = useReducer((state: IClass, action: IClassReducerAction) => {
 		if (action.type === "reset") {
@@ -61,7 +63,7 @@ export default function AddClassDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addClassMutation.mutate({ ...data, school: user.account || '', title: data.title || `${data.stage} ${data.level || ''}` })
+		addClassMutation.mutate({ ...data, school: user.school || '', title: data.title || `${data.stage} ${data.level || ''}` })
 	};
 
 	const addClassMutation = useMutate<IClass, any>(
@@ -75,7 +77,14 @@ export default function AddClassDialog({
 		  },
 		  showErrorMessage: true
 		}
-	  )
+	)
+
+	const { data: teachers } = useFetch<ITeacher[]>({
+		api: apiGetAllTeachers,
+		key: ["AllTeachers"],
+		requireAuth: true
+	})
+  
 
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
@@ -132,6 +141,23 @@ export default function AddClassDialog({
                                 value={data.title || `${data.stage} ${data.level || ''}`}
                                 onChange={(e) => dispatch({ type: "title", payload: e.target.value })}
                             />
+                        </div>
+						<div className="flex flex-col gap-2">
+                            <Label htmlFor="formTeacher" className="">
+                                Form Teacher
+                            </Label>
+							<Select onValueChange={(value) => dispatch({ type: "formTeacher", payload: value })} defaultValue={data.formTeacher as string}>
+								<SelectTrigger className="">
+									<SelectValue placeholder="" />
+								</SelectTrigger>
+								<SelectContent>
+									{
+										teachers?.map(teacher => (
+											<SelectItem key={teacher._id} value={teacher._id || ''}>{teacher.name}</SelectItem> 
+										))
+									}
+								</SelectContent>
+							</Select>
                         </div>
                     </div>
 					<DialogFooter className="flex items-center justify-center sm:justify-center">
