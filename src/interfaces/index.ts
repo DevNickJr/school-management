@@ -262,3 +262,7 @@ export interface IScore extends IBase {
     total?: number;
     remark?: string;
 }
+
+export interface IClassStudentScore extends IClassStudent {
+    scores: IScore[]
+}

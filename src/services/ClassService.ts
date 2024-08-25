@@ -50,6 +50,10 @@ export const apiGetClassSubjects =  ({ id }: { id: string }) => {
     return BaseService.get(`${servicePrefix}/${id}/subjects`, Auth(token))
 }
 
+export const apiGetAllClassSubjects =  ({ id }: { id: string }) => {
+    return BaseService.get(`${servicePrefix}/${id}/subjects/all`, Auth(token))
+}
+
 export const apiGetClassSubject =  ({ id }: { id: string }) => {
     return BaseService.get(`${servicePrefix}/subjects/${id}`, Auth(token))
 }
@@ -64,4 +68,9 @@ export const apiAddStudent =  (data: IStudent) => {
 
 export const apiGetClassStudents =  ({ id, academicYear }: { id: string; academicYear: string }) => {
     return BaseService.get(`${servicePrefix}/${id}/students/academic-year/${academicYear}`, Auth(token))
+}
+
+export const apiGetClassStudentScores =  ({ id, academicYear, term }: { id: string; academicYear: string, term: string }) => {
+    console.log({ academicYear, term })
+    return BaseService.get(`${servicePrefix}/${id}/scores?term=${term}&academicYear=${academicYear}`, Auth(token))
 }

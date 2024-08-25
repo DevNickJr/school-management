@@ -10,6 +10,7 @@ import DataTable from '@/components/Table/data-table'
 import { classSubjectColumnnsMaker } from '../_components/class-subjects.columns'
 import { apiGetClass, apiGetClassSubjects } from '@/services/ClassService'
 import ClassStudents from '../_components/ClassStudents'
+import ClassStudentScores from '../_components/ClassStudentScores'
 
 const Class = ({ params }: { params: { id: string } }) => {
     const { limit, onPaginationChange, page, pagination } = usePagination();
@@ -80,6 +81,7 @@ const Class = ({ params }: { params: { id: string } }) => {
                 }
             </section>
             <ClassStudents classId={params.id} />
+            <ClassStudentScores classId={params.id} />
         </div>
     )
 }

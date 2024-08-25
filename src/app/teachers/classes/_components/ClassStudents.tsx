@@ -16,7 +16,6 @@ const ClassStudents = ({ classId }: { classId: string }) => {
   const { limit, onPaginationChange, page, pagination } = usePagination();
   const { sorting, onSortingChange, field, order } = useSorting();
   const context = useAuthContext()
-
   
   const { data: classStudents, refetch, isLoading } = useFetch<IPaginatedResponse<IClassStudent[]>>({
       api: apiGetClassStudents,
@@ -31,7 +30,7 @@ const ClassStudents = ({ classId }: { classId: string }) => {
       enabled: !!classId,
   })
   
-  console.log({context, classStudents})
+//   console.log({context, classStudents})
   const classStudentColumns = classStudentsColumnnsMaker()
 
   return (
