@@ -7,9 +7,11 @@ import { AccessorFnColumnDef, AccessorKeyColumnDef, ColumnDef, createColumnHelpe
 const classStudentScoresColumnnHelper = createColumnHelper<IClassStudentScore>();
 
 export const classStudentScoresColumnnsMaker = ({
-    subjects
+    subjects,
+    numOfSubjects,
 }: {
-    subjects: AccessorKeyColumnDef<IClassStudentScore, IScore[]>[]
+    subjects: AccessorKeyColumnDef<IClassStudentScore, IScore[]>[];
+    numOfSubjects: number;
 }) =>  [
     classStudentScoresColumnnHelper.accessor("_id", {
         header: ({ column }) => <ColumnHead title="" column={column} />,
@@ -35,11 +37,23 @@ export const classStudentScoresColumnnsMaker = ({
     //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     // }),
     ...subjects,
-    // classStudentScoresColumnnHelper.accessor("exam", {
-    //     header: ({ column }) => <ColumnHead title="Exam" column={column} />,
-    //     sortingFn: "text",
-    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
-    // }),
+    classStudentScoresColumnnHelper.accessor("termTotal", {
+        id: 'termTotal',
+        header: ({ column }) => <ColumnHead title="Total" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
+    classStudentScoresColumnnHelper.accessor("termTotal", {
+        id: 'avaerage',
+        header: ({ column }) => <ColumnHead title="Average" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()/numOfSubjects}</span>,
+    }),
+    classStudentScoresColumnnHelper.accessor("position", {
+        header: ({ column }) => <ColumnHead title="Position" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    }),
     // classStudentScoresColumnnHelper.accessor("total", {
     //     header: ({ column }) => <ColumnHead title="Total" column={column} />,
     //     sortingFn: "text",

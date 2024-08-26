@@ -71,6 +71,5 @@ export const apiGetClassStudents =  ({ id, academicYear }: { id: string; academi
 }
 
 export const apiGetClassStudentScores =  ({ id, academicYear, term }: { id: string; academicYear: string, term: string }) => {
-    console.log({ academicYear, term })
     return BaseService.get(`${servicePrefix}/${id}/scores?term=${term}&academicYear=${academicYear}`, Auth(token))
 }

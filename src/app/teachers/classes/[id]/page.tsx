@@ -37,7 +37,6 @@ const Class = ({ params }: { params: { id: string } }) => {
         requireAuth: true
     })
 
-
     const classSubjectColumns = classSubjectColumnnsMaker()
 
     return (

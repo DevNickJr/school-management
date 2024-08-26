@@ -265,4 +265,7 @@ export interface IScore extends IBase {
 
 export interface IClassStudentScore extends IClassStudent {
     scores: IScore[]
+    termTotal: number;
+    termAverage: number;
+    position: number;
 }

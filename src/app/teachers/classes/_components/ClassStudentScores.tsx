@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { usePagination } from '@/hooks/usePagination'
 import { useSorting } from '@/hooks/useSorting'
 import useFetch from '@/hooks/useFetch'
-import { IClassStudentScore, IClassSubject, IStudent, ISubject } from '@/interfaces'
+import { IClassStudentScore, IClassSubject, IPaginatedResponse, IStudent, ISubject } from '@/interfaces'
 import DataTable from '@/components/Table/data-table'
 import { useAuthContext } from '@/hooks/useAuthContext'
 import NoResult from '@/components/NoResult'
@@ -39,12 +39,12 @@ const ClassStudentScores = ({ classId }: { classId: string }) => {
             sortingFn: "text",
             cell: (info) => {
                 const score = info.getValue()?.find(val => val.classSubject === classSubject._id)
-                return <span className="whitespace-nowrap">{!score ? 'NIL' : (score?.CA || 0) + (score?.exam || 0)}</span>
+                return <span className="whitespace-nowrap">{!score ? '-' : (score?.total || 0)}</span>
             }
         }))
   },[classSubjects])
   
-  const { data: classStudentScores, refetch, isLoading } = useFetch<IClassStudentScore[]>({
+  const { data: classStudentScores, refetch, isLoading } = useFetch<IPaginatedResponse<IClassStudentScore[]>>({
       api: apiGetClassStudentScores,
       param: {
           pagination: { page, limit },
@@ -58,22 +58,26 @@ const ClassStudentScores = ({ classId }: { classId: string }) => {
       enabled: !!classId,
   })
   
-  console.log({classStudentScores})
-  const classStudentColumns = classStudentScoresColumnnsMaker({ subjects: subjects ?? [] })
+  const classStudentColumns = classStudentScoresColumnnsMaker({
+    subjects: subjects ?? [],
+    numOfSubjects: classSubjects?.length || 1
+  })
+
+  console.log({ dd: classSubjects?.length })
 
   return (
     <section className="mt-4">
-        <h2 className='mb-2 text-xl font-semibold text-black/80'>Scores</h2>        
+        <h2 className='mb-2 text-xl font-semibold text-black/80'>Results</h2>        
         {
-        // !!(classStudentScores?.totalDocs && classStudentScores?.totalDocs > 0) ?
-        !!(classStudentScores) ?
+        // !!(classStudentScores) ?
+        !!(classStudentScores?.totalDocs && classStudentScores?.totalDocs > 0 && !!classSubjects?.length) ?
             <DataTable
                 title="classStudentScores"
                 columns={classStudentColumns} 
-                data={classStudentScores ?? []} 
+                data={classStudentScores?.docs ?? []} 
                 onPaginationChange={onPaginationChange}
-                pageCount={Number(classStudentScores?.length || 0)}
-                totalDocs={Number(classStudentScores?.length)}
+                pageCount={Number(classStudentScores?.totalPages || 0)}
+                totalDocs={Number(classStudentScores?.totalDocs)}
                 pagination={pagination}
                 onSortingChange={onSortingChange}
                 sorting={sorting}
