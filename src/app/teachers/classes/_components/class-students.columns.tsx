@@ -26,7 +26,7 @@ export const classStudentsColumnnsMaker = () =>  [
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
-    classStudentsColumnnHelper.accessor((val) => `${val.academicYear.startYear}/${val.academicYear.endYear}`, {
+    classStudentsColumnnHelper.accessor((val) => `${val.academicYear.year}`, {
         id: 'session',
         header: ({ column }) => <ColumnHead title="Session" column={column} />,
         sortingFn: "text",

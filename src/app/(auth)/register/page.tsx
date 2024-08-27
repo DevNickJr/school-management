@@ -1,12 +1,13 @@
 'use client'
 import Link from 'next/link'
 import React, { useReducer, FormEvent } from 'react'
-import { IUserRegister, IRegistereducerAction } from '@/interfaces'
+import { IUserRegister, IRegistereducerAction, TermEnum } from '@/interfaces'
 import { toast } from 'react-toastify'
 import usePost from '@/hooks/useMutate'
 import { useRouter } from 'next/navigation'
 import { apiRegister } from '@/services/AuthService'
 import Loader from '@/components/Loader'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 
 const initialState: IUserRegister = {
@@ -16,6 +17,8 @@ const initialState: IUserRegister = {
   confirm_password: '',
   phone: '',
   schoolName: '',
+  session: '',
+  term: '',
 }
 
 const Register = () => {
@@ -86,17 +89,30 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
                 <input required value={user?.name} onChange={(e) => dispatch({ type: "name", payload: e.target.value})} type='text' name="name" id="name" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter First Name' />
               </div>
               <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="email">Email Address</label>
-                <input required value={user?.email} onChange={(e) => dispatch({ type: "email", payload: e.target.value})}  type="email" name="email" id="email" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Email Address' />
-              </div>
-              <div className='flex flex-col gap-2 text-xs'>
-                <label htmlFor="phone">Phone Number</label>
-                <input required value={user?.phone} onChange={(e) => dispatch({ type: "phone", payload: e.target.value})}  type="tel" name="phone" id="phone" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
-              </div>
-              <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="password">School Name</label>
                 <input required value={user?.schoolName} onChange={(e) => dispatch({ type: "schoolName", payload: e.target.value})}  type="schoolName" name="schoolName" id="schoolName" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
               </div>
+              <div className='flex flex-col gap-2 text-xs'>
+                <label htmlFor="session">Current Session</label>
+                <input required value={user?.session} onChange={(e) => dispatch({ type: "session", payload: e.target.value})}  type="text" name="session" id="session" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Session, eg 2021/2022' />
+              </div>
+              <div className='flex flex-col gap-2 text-xs'>
+                <label htmlFor="term">Current Term</label>
+                <Select onValueChange={(value) => dispatch({ type: "term", payload: value })}>
+                  <SelectTrigger className="">
+                    <SelectValue placeholder="" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {
+                      Object.values(TermEnum)?.map(term => (
+                        <SelectItem key={term} value={term}>{term}</SelectItem> 
+                      ))
+                    }
+                  </SelectContent>
+                </Select>
+              </div>
+
+          
               <button type='submit' className='flex items-center justify-center w-full gap-2 p-4 pl-5 pr-6 mt-8 text-sm font-bold text-white rounded-md bg-primary'>
                 Proceed
               </button>
@@ -104,6 +120,14 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
           )}
           {step === 2 && (
             <form className='grid gap-4' onSubmit={handleRegister}>
+              <div className='flex flex-col gap-2 text-xs'>
+                <label htmlFor="email">Email Address</label>
+                <input required value={user?.email} onChange={(e) => dispatch({ type: "email", payload: e.target.value})}  type="email" name="email" id="email" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Email Address' />
+              </div>
+              <div className='flex flex-col gap-2 text-xs'>
+                <label htmlFor="phone">Phone Number</label>
+                <input required value={user?.phone} onChange={(e) => dispatch({ type: "phone", payload: e.target.value})}  type="tel" name="phone" id="phone" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
+              </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="password">Password</label>
                 <input required value={user?.password} onChange={(e) => dispatch({ type: "password", payload: e.target.value})}  type="password" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />

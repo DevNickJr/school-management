@@ -46,7 +46,7 @@ const AcademicYearSwitcher = ({ showLabel=false }: { showLabel?: boolean }) => {
         <SelectContent>
           {
             academicYears?.map(el => (
-              <SelectItem key={el._id} value={el._id || ''}>{el.startYear}/{el.endYear}</SelectItem> 
+              <SelectItem key={el._id} value={el._id || ''}>{el.year}</SelectItem> 
             ))
           }
         </SelectContent>

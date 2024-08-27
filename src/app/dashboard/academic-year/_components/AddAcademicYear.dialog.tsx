@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useReducer, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-import { useRouter } from "next/navigation";
 import { IPaginatedResponse, IReducerAction, IAcademicYear } from "@/interfaces";
 import useMutate from "@/hooks/useMutate";
 import { toast } from "react-toastify";
@@ -28,8 +27,7 @@ export interface IAcademicYearReducerAction extends IReducerAction<keyof IAcadem
 
 const initialState: IAcademicYear = {
 	school: '',
-	startYear: 0,
-	endYear: 0,
+	year: '',
 }
 export default function AddAcademicYearDialog({
 	children,
@@ -42,7 +40,6 @@ export default function AddAcademicYearDialog({
 }) {
 	const [open, setOpen] = useState<boolean>(false);
 	const user = useAuthContext()
-	const router = useRouter();
 
 	const [data, dispatch] = useReducer((state: IAcademicYear, action: IAcademicYearReducerAction) => {
 		if (action.type === "reset") {
@@ -82,28 +79,15 @@ export default function AddAcademicYearDialog({
                     <div className="grid gap-4">
 						<div className="flex flex-col gap-2">
                             <Label htmlFor="startYear" className="">
-                                Start Year
+                                Session
                             </Label>
                             <Input
                                 id="startYear"
                                 name="startYear"
                                 placeholder=""
                                 className=""
-                                value={data.startYear}
-								onChange={(e) => dispatch({ type: "startYear", payload: Number(e.target.value) })}
-                            />
-                        </div>
-						<div className="flex flex-col gap-2">
-                            <Label htmlFor="endYear" className="">
-                                End Year
-                            </Label>
-                            <Input
-                                id="endYear"
-                                name="endYear"
-                                placeholder=""
-                                className=""
-                                value={data.endYear}
-								onChange={(e) => dispatch({ type: "endYear", payload: Number(e.target.value) })}
+                                value={data.year}
+								onChange={(e) => dispatch({ type: "year", payload: e.target.value})}
                             />
                         </div>
                     </div>

@@ -1,6 +1,5 @@
 "use client";
 import ColumnHead from "@/components/ColumnHead";
-import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { IAcademicYear, IClassStudent, IScore } from "@/interfaces";
 import { formatDate3 } from "@/utils/date";
@@ -24,7 +23,7 @@ export const scoresColumnnsMaker = () =>  [
     scoresColumnnHelper.accessor("academicYear", {
         header: ({ column }) => <ColumnHead title="Session" column={column} />,
         sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IAcademicYear)?.startYear}/{(info.getValue() as IAcademicYear)?.endYear}</span>,
+        cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IAcademicYear)?.year}</span>,
     }),
     scoresColumnnHelper.accessor("term", {
         header: ({ column }) => <ColumnHead title="Term" column={column} />,

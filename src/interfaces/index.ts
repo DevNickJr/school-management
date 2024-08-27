@@ -23,6 +23,12 @@ export enum GenderEnum {
   FEMALE = 'FEMALE',
 }
 
+export enum TermEnum {
+    FIRST = 'FIRST',
+    SECOND = 'SECOND',
+    THIRD = 'THIRD',
+  }
+
 export interface IResponseData<T> {    
     totalItems: number
     totalPages: number
@@ -89,7 +95,9 @@ export interface IUserRegister {
     email: string
     password: string
     confirm_password: string
-    phone: string
+    phone: string;
+    session: string;
+    term: TermEnum | '';
 }
 
 export interface IProfile {
@@ -227,8 +235,10 @@ export interface ISubject extends IBase {
 
 export interface IAcademicYear extends IBase {
     school?: string;
-    startYear: number;
-    endYear: number;
+    // startYear: number;
+    // endYear: number;
+    year: string;
+    activeTerm?: TermEnum; // New field for the active term
     isActive?: boolean;
 }
 

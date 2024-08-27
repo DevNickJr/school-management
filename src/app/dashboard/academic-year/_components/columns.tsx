@@ -22,21 +22,26 @@ export const academicYearColumnnsMaker = ({
             <Checkbox className="w-3.5 h-3.5" />
         </div>,
     }),
-    academicYearColumnnHelper.accessor((val) => `${val.startYear}/${val.endYear}`, {
-        id: 'Session',
+    academicYearColumnnHelper.accessor('year', {
+        id: 'year',
         header: ({ column }) => <ColumnHead title="Session" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
-    academicYearColumnnHelper.accessor("startYear", {
-        header: ({ column }) => <ColumnHead title="Start" column={column} />,
+    // academicYearColumnnHelper.accessor("startYear", {
+    //     header: ({ column }) => <ColumnHead title="Start" column={column} />,
+    //     sortingFn: "text",
+    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    // }),
+    // academicYearColumnnHelper.accessor("endYear", {
+    //     header: ({ column }) => <ColumnHead title="End" column={column} />,
+    //     sortingFn: "text",
+    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    // }),
+    academicYearColumnnHelper.accessor("activeTerm", {
+        header: ({ column }) => <ColumnHead title="Active Term" column={column} />,
         sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
-    }),
-    academicYearColumnnHelper.accessor("endYear", {
-        header: ({ column }) => <ColumnHead title="End" column={column} />,
-        sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+        cell: (info) => <span className="whitespace-nowrap">{!!info.getValue()?.toString()}</span>,
     }),
     academicYearColumnnHelper.accessor("isActive", {
         header: ({ column }) => <ColumnHead title="Is Active Session" column={column} />,
