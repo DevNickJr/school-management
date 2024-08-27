@@ -34,7 +34,7 @@ const ClassStudents = ({ classId }: { classId: string }) => {
   const classStudentColumns = classStudentsColumnnsMaker()
 
   return (
-    <section className="mt-4">
+    <section className="mt-4 mb-10">
         <h2 className='mb-2 text-xl font-semibold text-black/80'>Students</h2>        
         {
         !!(classStudents?.totalDocs && classStudents?.totalDocs > 0) ?

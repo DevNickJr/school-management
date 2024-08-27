@@ -62,7 +62,7 @@ const TeacherSubject = ({ params }: { params: { id: string } }) => {
   // console.log({ subjectScores });
 
   return (
-    <div className=''>
+    <div className='pb-10'>
         <AddScoreDialog 
           open={!!classStudent}
           setOpen={() => setClassStudent('')}

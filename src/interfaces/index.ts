@@ -65,15 +65,15 @@ export interface IUserLogin {
 
 export interface IUserLoginResponse {
     _id: string | null;
-    term: string | null;
+    email: string | null; 
+    name: string | null;
     accountId: string | null;
     school: string | null;
-    name: string | null;
-    email: string | null; 
     role: AccountTypeEnum | null;
     accessToken: string | null;
-    academicYear: string | null;
     refreshToken: string | null;
+    academicYear: string | null;
+    term: string | null;
 
 }
 

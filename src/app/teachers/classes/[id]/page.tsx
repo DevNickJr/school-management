@@ -40,20 +40,20 @@ const Class = ({ params }: { params: { id: string } }) => {
     const classSubjectColumns = classSubjectColumnnsMaker()
 
     return (
-        <div className=''>
+        <div className='pb-10'>
             <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
                 <h2 className='text-3xl font-bold text-black/80'>{data?.title}</h2>
             </div>
             <section className="mt-4 mb-10">
-            <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
-                <h2 className='mb-2 text-xl font-semibold text-black/80'>Subjects</h2>        
-                {/* <AddSubjectToClass refetch={refetch}>
-                    <Button className='flex items-center gap-2 p-2 px-4 text-xs text-white md:px-4 w-fit rounded-xl bg-primary'>
-                        <MdAdd className="text-lg text-white" />
-                        <span>Add Subject To Class</span>
-                    </Button>
-                </AddSubjectToClass> */}
-            </div>
+                <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
+                    <h2 className='mb-2 text-xl font-semibold text-black/80'>Subjects</h2>        
+                    {/* <AddSubjectToClass refetch={refetch}>
+                        <Button className='flex items-center gap-2 p-2 px-4 text-xs text-white md:px-4 w-fit rounded-xl bg-primary'>
+                            <MdAdd className="text-lg text-white" />
+                            <span>Add Subject To Class</span>
+                        </Button>
+                    </AddSubjectToClass> */}
+                </div>
                 {
                 (classSubjects?.totalDocs && classSubjects?.totalDocs > 0) ?
                     <DataTable

@@ -29,7 +29,7 @@ const TeacherClasses = () => {
   const columns = classColumnnsMaker()
 
   return (
-    <div className=''>
+    <div className='pb-10'>
         <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
             <h2 className='text-3xl font-bold text-black/80'>Teacher Classes</h2>
         </div>

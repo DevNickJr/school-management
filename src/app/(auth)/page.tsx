@@ -27,15 +27,7 @@ const Login = () => {
     apiLogin,
     {
       onSuccess: (data: IUserLoginResponse) => {
-        console.log({ data })
-        dispatch({ type: "LOGIN", payload: {
-          ...data,
-          term: data.term,
-          accountId: data.accountId,
-          academicYear: data.academicYear,
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-        }})
+        dispatch({ type: "LOGIN", payload: data })
         toast.success("Logged in Successfully")
         if (data.role === AccountTypeEnum.teacher) {
           return router.push('/teachers')
