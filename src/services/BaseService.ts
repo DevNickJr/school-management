@@ -1,7 +1,5 @@
 import axios from "axios";
 import appConfig from "@/configs/app.config";
-// import { apiRefreshToken } from "./AuthService";
-
 
 const BaseService = axios.create({
     baseURL: appConfig.apiPrefix,
