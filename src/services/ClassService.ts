@@ -65,6 +65,9 @@ export const apiGetTeacherSubjects =  ({ teacherId }: { teacherId: string }) => 
 export const apiAddStudent =  (data: IStudent) => {
     return BaseService.post(`${servicePrefix}/students`, data, Auth(token))
 }
+export const apiPromoteStudent =  ({ id }: { id: string }) => {
+    return BaseService.post(`${servicePrefix}/students/${id}/promote`, {}, Auth(token))
+}
 
 export const apiGetClassStudents =  ({ id, academicYear }: { id: string; academicYear: string }) => {
     return BaseService.get(`${servicePrefix}/${id}/students/academic-year/${academicYear}`, Auth(token))

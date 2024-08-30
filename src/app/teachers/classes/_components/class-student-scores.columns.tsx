@@ -1,5 +1,6 @@
 "use client";
 import ColumnHead from "@/components/ColumnHead";
+import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { IAcademicYear, IClassStudentScore, IScore, IStudent } from "@/interfaces";
 import { AccessorFnColumnDef, AccessorKeyColumnDef, ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -54,6 +55,12 @@ export const classStudentScoresColumnnsMaker = ({
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
+    // classStudentScoresColumnnHelper.accessor("promoted", {
+    //     header: ({ column }) => <ColumnHead title="Promoted" column={column} />,
+    //     sortingFn: "text",
+    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue() ? 'Yes' : 'No'}</span>,
+    //     // cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IStudent)?.name}</span>,
+    // }),
     // classStudentScoresColumnnHelper.accessor("total", {
     //     header: ({ column }) => <ColumnHead title="Total" column={column} />,
     //     sortingFn: "text",
@@ -69,18 +76,18 @@ export const classStudentScoresColumnnsMaker = ({
     //   sortingFn: "text",
     //   cell: (info) => <span className="whitespace-nowrap">{formatDate3(info.getValue()?.toString())}</span>,
     // }),
-    // classStudentScoresColumnnHelper.accessor(row => row, {
-    //     id: 'actions',
-    //     sortingFn: "text",
-    //     cell: (info) => {
-    //         const rowData = info.getValue()
-    //         const id = rowData?._id;
-    //         return (
-    //             <Actions
-    //                 viewLink={`/classes/${id}`}
-    //             />
-    //         );
-    //     },
-    //     header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
-    // }),
+    classStudentScoresColumnnHelper.accessor(row => row, {
+        id: 'actions',
+        sortingFn: "text",
+        cell: (info) => {
+            const rowData = info.getValue()
+            const id = rowData?._id;
+            return (
+                <Actions
+                    viewLink={`/classes/${id}`}
+                />
+            );
+        },
+        header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex justify-center" />,
+    }),
 ] as ColumnDef<IClassStudentScore>[];

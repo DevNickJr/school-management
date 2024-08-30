@@ -31,16 +31,16 @@ export const classColumnnsMaker = ({
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as ITeacher)?.name}</span>,
     }),
-    classColumnnHelper.accessor("stage", {
-        header: ({ column }) => <ColumnHead title="Stage" column={column} />,
+    classColumnnHelper.accessor("grade", {
+        header: ({ column }) => <ColumnHead title="Grade" column={column} />,
         sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+        cell: (info) => <span className="whitespace-nowrap">{'Grade ' + info.getValue()?.toString()}</span>,
     }),
-    classColumnnHelper.accessor("level", {
-        header: ({ column }) => <ColumnHead title="Level" column={column} />,
-        sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
-    }),
+    // classColumnnHelper.accessor("level", {
+    //     header: ({ column }) => <ColumnHead title="Level" column={column} />,
+    //     sortingFn: "text",
+    //     cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
+    // }),
     classColumnnHelper.accessor("createdAt", {
       header: ({ column }) => <ColumnHead title="Created At" column={column} />,
       sortingFn: "text",

@@ -196,10 +196,11 @@ export interface IClass extends IBase {
   school: string;
   formTeacher?: string | ITeacher;
   title: string;
-  stage: EducationalStage | '';
-  level: number;
+  grade: number;
   createdAt?: string;
   updatedAt?: string;
+  //   stage: EducationalStage | '';
+  //   level: number;
 }
 
 export interface IAssignFormTeacher {
@@ -259,6 +260,7 @@ export interface IClassStudent extends IBase {
     class: string;
     student: IStudent;
     academicYear: IAcademicYear;
+    promoted?: boolean;
 }
 
 

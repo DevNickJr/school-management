@@ -4,11 +4,18 @@ import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
 import { IClassStudent } from "@/interfaces";
 import { formatDate3 } from "@/utils/date";
+import { UseMutationResult } from "@tanstack/react-query";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 const classStudentsColumnnHelper = createColumnHelper<IClassStudent>();
 
-export const classStudentsColumnnsMaker = () =>  [
+export const classStudentsColumnnsMaker = ({
+    promoteStudentMutation,
+}: {
+    promoteStudentMutation: UseMutationResult<any, any, {
+        id: string;
+    }, unknown>
+}) =>  [
     classStudentsColumnnHelper.accessor("_id", {
         header: ({ column }) => <ColumnHead title="" column={column} />,
         sortingFn: "text",
@@ -32,6 +39,12 @@ export const classStudentsColumnnsMaker = () =>  [
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
+    classStudentsColumnnHelper.accessor("promoted", {
+        header: ({ column }) => <ColumnHead title="Promoted" column={column} />,
+        sortingFn: "text",
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue() ? 'Yes' : 'No'}</span>,
+        // cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IStudent)?.name}</span>,
+    }),
     classStudentsColumnnHelper.accessor("createdAt", {
       header: ({ column }) => <ColumnHead title="Created At" column={column} />,
       sortingFn: "text",
@@ -45,7 +58,12 @@ export const classStudentsColumnnsMaker = () =>  [
             const id = rowData?._id;
             return (
                 <Actions
-                    viewLink={`/dashboard/classes/${id}`}
+                    actions={[
+                        {
+                            label: 'Promote',
+                            fn: () => promoteStudentMutation.mutate({ id: id! }),
+                        },
+                    ]}
                 />
             );
         },

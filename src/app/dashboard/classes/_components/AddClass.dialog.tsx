@@ -20,8 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useReducer, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
-import { useRouter } from "next/navigation";
-import { IPaginatedResponse, IReducerAction, IClass, EducationalStage, ITeacher } from "@/interfaces";
+import { IPaginatedResponse, IReducerAction, IClass, ITeacher } from "@/interfaces";
 import useMutate from "@/hooks/useMutate";
 import { toast } from "react-toastify";
 import { useAuthContext } from "@/hooks/useAuthContext";
@@ -38,8 +37,7 @@ export interface IClassReducerAction extends IReducerAction<keyof IClass> {
 const initialState: IClass = {
 	title: '',
 	formTeacher: '',
-	stage: '',
-	level: 0,
+	grade: 0,
 	school: '',
 }
 export default function AddClassDialog({
@@ -63,7 +61,7 @@ export default function AddClassDialog({
 
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		addClassMutation.mutate({ ...data, school: user.school || '', title: data.title || `${data.stage} ${data.level || ''}` })
+		addClassMutation.mutate({ ...data, school: user.school || '' })
 	};
 
 	const addClassMutation = useMutate<IClass, any>(
@@ -97,7 +95,7 @@ export default function AddClassDialog({
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="grid gap-4 py-4 gap-x-5">
                     <div className="grid gap-4">
-						<div className="flex flex-col gap-2">
+						{/* <div className="flex flex-col gap-2">
                             <Label htmlFor="stage" className="">
                                 Stage
                             </Label>
@@ -113,8 +111,8 @@ export default function AddClassDialog({
 									}
 								</SelectContent>
 							</Select>
-                        </div>
-                        <div className="flex flex-col gap-2">
+                        </div> */}
+                        {/* <div className="flex flex-col gap-2">
                             <Label htmlFor="level" className="">
                                 level
                             </Label>
@@ -127,7 +125,7 @@ export default function AddClassDialog({
 								type="number"
                                 onChange={(e) => dispatch({ type: "level", payload: Number(e.target.value) })}
                             />
-                        </div>
+                        </div> */}
 						<div className="flex flex-col gap-2">
                             <Label htmlFor="title" className="">
                                 Title/Name
@@ -135,10 +133,9 @@ export default function AddClassDialog({
                             <Input
                                 id="title"
                                 name="title"
-								disabled={true}
                                 placeholder="eg. Primary 1"
                                 className=""
-                                value={data.title || `${data.stage} ${data.level || ''}`}
+                                value={data.title}
                                 onChange={(e) => dispatch({ type: "title", payload: e.target.value })}
                             />
                         </div>
