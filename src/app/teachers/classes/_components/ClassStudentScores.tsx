@@ -64,8 +64,6 @@ const ClassStudentScores = ({ classId }: { classId: string }) => {
     numOfSubjects: classSubjects?.length || 1
   })
 
-  console.log({ dd: classSubjects?.length })
-
   return (
     <section className="mt-4 mb-10">
         <h2 className='mb-2 text-xl font-semibold text-black/80'>Results</h2>   

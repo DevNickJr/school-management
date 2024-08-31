@@ -1,7 +1,7 @@
+'use client'
 import React from 'react';
-import ReactPDF, { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { saveAs } from 'file-saver'; // To handle file download
-import { ColumnDef } from '@tanstack/react-table';
+import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ColumnDef, AccessorFnColumnDefBase, AccessorKeyColumnDefBase } from '@tanstack/react-table';
 
 // Define styles
 const styles = StyleSheet.create({
@@ -59,12 +59,19 @@ const PdfTable = <T,>({ columns, data }: { columns: ColumnDef<T, any>[], data: T
     {data.map((row, rowIndex) => (
       <View key={rowIndex} style={styles.tableRow}>
         {columns.map((col, colIndex) => {
-          const cellContent = col.cell
-            ? col.cell({ getValue: () => col.(row) })
-            : col.accessorFn(row);
+          // Determine the column type and extract cell value accordingly
+          let cellContent: any;
+          if ('accessorFn' in col) {
+            cellContent = (col as AccessorFnColumnDefBase<T, any>).accessorFn(row, rowIndex);
+          } else if ('accessorKey' in col) {
+            cellContent = (row as any)[(col as AccessorKeyColumnDefBase<T, any>).accessorKey];
+          } else {
+            cellContent = '';
+          }
+
           return (
             <View key={colIndex} style={styles.tableCol}>
-              <Text style={styles.tableCell}>{cellContent}</Text>
+              {/* <Text style={styles.tableCell}>{cellContent}</Text> */}
             </View>
           );
         })}
@@ -90,14 +97,14 @@ const DownloadPDFButton = <T,>({ columns, data }: { columns: ColumnDef<T, any>[]
     return !col.id?.includes('actions') && !col.id?.includes('checkbox');
   });
 
-  // Function to download the PDF
-  const downloadPDF = async () => {
-    const blobStream = await ReactPDF.renderToStream(<MyDocument columns={filteredColumns} data={data} />);
-    const blob = await new Response(blobStream as any).blob();
-    saveAs(blob, 'table.pdf');
-  };
-
-  return <button onClick={downloadPDF}>Download PDF</button>;
+  return (
+    <PDFDownloadLink
+      document={<MyDocument columns={filteredColumns} data={data} />}
+      fileName="table.pdf"
+    >
+      {({ loading }) => (loading ? 'Loading document...' : 'Download PDF')}
+    </PDFDownloadLink>
+  );
 };
 
 export default DownloadPDFButton;
