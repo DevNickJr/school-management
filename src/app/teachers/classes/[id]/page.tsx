@@ -11,6 +11,7 @@ import { classSubjectColumnnsMaker } from '../_components/class-subjects.columns
 import { apiGetClass, apiGetClassSubjects } from '@/services/ClassService'
 import ClassStudents from '../_components/ClassStudents'
 import ClassStudentScores from '../_components/ClassStudentScores'
+import ReactPDF from "@react-pdf/renderer";
 
 const Class = ({ params }: { params: { id: string } }) => {
     const { limit, onPaginationChange, page, pagination } = usePagination();

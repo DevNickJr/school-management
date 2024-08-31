@@ -12,6 +12,7 @@ import { apiGetAllClassSubjects, apiGetClassStudentScores } from '@/services/Cla
 import { classStudentScoresColumnnsMaker } from './class-student-scores.columns'
 import ColumnHead from '@/components/ColumnHead'
 import { CellContext, Column, createColumnHelper } from '@tanstack/react-table'
+import DownloadPDFButton from '@/components/PDFMaker'
 
 const classStudentScoresColumnnHelper = createColumnHelper<IClassStudentScore>();
 
@@ -67,7 +68,8 @@ const ClassStudentScores = ({ classId }: { classId: string }) => {
 
   return (
     <section className="mt-4 mb-10">
-        <h2 className='mb-2 text-xl font-semibold text-black/80'>Results</h2>        
+        <h2 className='mb-2 text-xl font-semibold text-black/80'>Results</h2>   
+        <DownloadPDFButton columns={classStudentColumns} data={classStudentScores?.docs ?? []} />     
         {
         // !!(classStudentScores) ?
         !!(classStudentScores?.totalDocs && classStudentScores?.totalDocs > 0 && !!classSubjects?.length) ?
