@@ -62,26 +62,26 @@ export default function DataTable<TData, TValue>({
 	const [globalFilter, setGlobalFilter] = React.useState('')
 
 	
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(), // sort
-    onColumnFiltersChange: setColumnFilters, // filter
-    onGlobalFilterChange: setGlobalFilter, // GLOBAL FILTER
-    getFilteredRowModel: getFilteredRowModel(), // filter
-    manualPagination: true, // server pagination
-    onPaginationChange, // server pagination
-    pageCount,
-    manualSorting: true,
-    onSortingChange,
-    state: {
-      sorting, // sort
-      columnFilters, // filter
-      globalFilter, // filter
-      pagination, // sever side
-    },
-  })
+   const table = useReactTable({
+		data,
+		columns,
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(), // sort
+		onColumnFiltersChange: setColumnFilters, // filter
+		onGlobalFilterChange: setGlobalFilter, // GLOBAL FILTER
+		getFilteredRowModel: getFilteredRowModel(), // filter
+		manualPagination: true, // server pagination
+		onPaginationChange, // server pagination
+		pageCount,
+		manualSorting: true,
+		onSortingChange,
+			state: {
+			sorting, // sort
+			columnFilters, // filter
+			globalFilter, // filter
+			pagination, // sever side
+		},
+   })
   
 	const handlePageSize = (value: string) => {
 		table.setPageSize(Number(value))

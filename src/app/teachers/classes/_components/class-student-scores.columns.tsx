@@ -2,8 +2,8 @@
 import ColumnHead from "@/components/ColumnHead";
 import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { IAcademicYear, IClassStudentScore, IScore, IStudent } from "@/interfaces";
-import { AccessorFnColumnDef, AccessorKeyColumnDef, ColumnDef, createColumnHelper } from "@tanstack/react-table";
+import { IClassStudentScore, IScore, IStudent } from "@/interfaces";
+import { AccessorKeyColumnDef, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 const classStudentScoresColumnnHelper = createColumnHelper<IClassStudentScore>();
 
@@ -15,6 +15,7 @@ export const classStudentScoresColumnnsMaker = ({
     numOfSubjects: number;
 }) =>  [
     classStudentScoresColumnnHelper.accessor("_id", {
+        id: "_id",
         header: ({ column }) => <ColumnHead title="" column={column} />,
         sortingFn: "text",
         cell: (info) => <div>
@@ -22,6 +23,7 @@ export const classStudentScoresColumnnsMaker = ({
         </div>,
     }),
     classStudentScoresColumnnHelper.accessor("student", {
+        id: "Student",
         header: ({ column }) => <ColumnHead title="Student" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{(info.getValue() as IStudent)?.name?.toString()}</span>,
@@ -39,18 +41,19 @@ export const classStudentScoresColumnnsMaker = ({
     // }),
     ...subjects,
     classStudentScoresColumnnHelper.accessor("termTotal", {
-        id: 'termTotal',
+        id: 'Term Total',
         header: ({ column }) => <ColumnHead title="Total" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
     classStudentScoresColumnnHelper.accessor("termTotal", {
-        id: 'avaerage',
+        id: 'Average',
         header: ({ column }) => <ColumnHead title="Average" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()/numOfSubjects}</span>,
     }),
     classStudentScoresColumnnHelper.accessor("position", {
+        id: "Position",
         header: ({ column }) => <ColumnHead title="Position" column={column} />,
         sortingFn: "text",
         cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,

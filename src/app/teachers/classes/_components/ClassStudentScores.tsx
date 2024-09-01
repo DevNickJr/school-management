@@ -35,7 +35,7 @@ const ClassStudentScores = ({ classId }: { classId: string }) => {
 
   const subjects = useMemo(() => {
     return classSubjects?.map(classSubject => classStudentScoresColumnnHelper.accessor('scores', {
-            id: classSubject._id || '',
+            id: (classSubject.subject as ISubject)?.title + '_scores_' + classSubject?._id,
             header: ({ column }) => <ColumnHead title={(classSubject.subject as ISubject)?.title || ''} column={column} />,
             sortingFn: "text",
             cell: (info) => {

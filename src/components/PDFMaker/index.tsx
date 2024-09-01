@@ -2,6 +2,7 @@
 import React from 'react';
 import { PDFDownloadLink, Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { ColumnDef, AccessorFnColumnDefBase, AccessorKeyColumnDefBase } from '@tanstack/react-table';
+import { IScore } from '@/interfaces';
 
 // Define styles
 const styles = StyleSheet.create({
@@ -49,7 +50,7 @@ const PdfTable = <T,>({ columns, data }: { columns: ColumnDef<T, any>[], data: T
       {columns.map((col, index) => (
         <View key={index} style={styles.tableColHeader}>
           <Text style={styles.tableCellHeader}>
-            {typeof col.header === 'string' ? col.header : col.id}
+            {typeof col.header === 'string' ? col.header : col.id?.split('_')?.[0]}
           </Text>
         </View>
       ))}
@@ -60,18 +61,22 @@ const PdfTable = <T,>({ columns, data }: { columns: ColumnDef<T, any>[], data: T
       <View key={rowIndex} style={styles.tableRow}>
         {columns.map((col, colIndex) => {
           // Determine the column type and extract cell value accordingly
+          // console.log({ col, row })
           let cellContent: any;
-          if ('accessorFn' in col) {
-            cellContent = (col as AccessorFnColumnDefBase<T, any>).accessorFn(row, rowIndex);
+          if ('accessorKey' in col && col['accessorKey'] === 'scores')  {
+            const score = (row as any).scores?.find((val: IScore) => val.classSubject === col.id?.split('_')?.[2] || '')
+            cellContent = !score ? '-' : (score?.total || 0);
+          } else if ('accessorKey' in col && col['accessorKey'] === 'student') {
+            cellContent = ((row as any)[(col as AccessorKeyColumnDefBase<T, any>).accessorKey as any])?.name;
           } else if ('accessorKey' in col) {
-            cellContent = (row as any)[(col as AccessorKeyColumnDefBase<T, any>).accessorKey];
+            cellContent = ((row as any)[(col as AccessorKeyColumnDefBase<T, any>).accessorKey as any]);
           } else {
-            cellContent = '';
+            cellContent = '-';
           }
 
           return (
             <View key={colIndex} style={styles.tableCol}>
-              {/* <Text style={styles.tableCell}>{cellContent}</Text> */}
+              <Text style={styles.tableCell}>{cellContent}</Text>
             </View>
           );
         })}
@@ -94,7 +99,8 @@ const DownloadPDFButton = <T,>({ columns, data }: { columns: ColumnDef<T, any>[]
   // Filter out checkbox and action columns
   const filteredColumns = columns.filter(col => {
     // Customize your filter conditions based on the column's properties
-    return !col.id?.includes('actions') && !col.id?.includes('checkbox');
+    return !col.id?.includes('actions') && !col.id?.includes('checkbox') && (col as AccessorKeyColumnDefBase<T, any>)?.accessorKey
+    !=='_id';
   });
 
   return (
