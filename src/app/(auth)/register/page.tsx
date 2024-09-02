@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { useReducer, FormEvent } from 'react'
+import React, { useReducer, FormEvent, useState } from 'react'
 import { IUserRegister, IRegistereducerAction, TermEnum } from '@/interfaces'
 import { toast } from 'react-toastify'
 import usePost from '@/hooks/useMutate'
@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 import { apiRegister } from '@/services/AuthService'
 import Loader from '@/components/Loader'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { EyeIcon, EyeOff } from 'lucide-react'
 
 
 const initialState: IUserRegister = {
@@ -24,6 +25,9 @@ const initialState: IUserRegister = {
 const Register = () => {
   const [step, setStep] = React.useState<number>(1)
   const [loading, setLoading] = React.useState(false)
+  const [showPassword1, setShowPassword1] = useState(false)
+  const [showPassword2, setShowPassword2] = useState(false)
+
   const [user, dispatch] = useReducer((state: IUserRegister, action: IRegistereducerAction) => {
     return { ...state, [action.type]: action.payload }
 }, initialState)
@@ -90,7 +94,7 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
               </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="password">School Name</label>
-                <input required value={user?.schoolName} onChange={(e) => dispatch({ type: "schoolName", payload: e.target.value})}  type="schoolName" name="schoolName" id="schoolName" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Phone number' />
+                <input required value={user?.schoolName} onChange={(e) => dispatch({ type: "schoolName", payload: e.target.value})}  type="schoolName" name="schoolName" id="schoolName" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter School Name' />
               </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="session">Current Session</label>
@@ -130,11 +134,19 @@ const handleRegister = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
               </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="password">Password</label>
-                <input required value={user?.password} onChange={(e) => dispatch({ type: "password", payload: e.target.value})}  type="password" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
+                <div className='relative flex flex-col'>
+                  <input required value={user?.password} onChange={(e) => dispatch({ type: "password", payload: e.target.value})} type={showPassword1 ? "text" : 'password'} name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
+                  {showPassword1 && <EyeIcon onClick={() => setShowPassword1(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+                  {!showPassword1 && <EyeOff onClick={() => setShowPassword1(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+                </div>
               </div>
               <div className='flex flex-col gap-2 text-xs'>
                 <label htmlFor="confirm_password">Confirm Password</label>
-                <input required value={user?.confirm_password} onChange={(e) => dispatch({ type: "confirm_password", payload: e.target.value})}  type="password" name="confirm_password" id="confirm_password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Confrim Password' />
+                <div className='relative flex flex-col'>
+                  <input required value={user?.confirm_password} onChange={(e) => dispatch({ type: "confirm_password", payload: e.target.value})} type={showPassword2 ? "text" : 'password'} name="confirm_password" id="confirm_password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Confrim Password' />
+                  {showPassword2 && <EyeIcon onClick={() => setShowPassword2(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+                  {!showPassword2 && <EyeOff onClick={() => setShowPassword2(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+                </div>
               </div>
               <button type='submit' className='flex items-center justify-center w-full gap-2 p-4 pl-5 pr-6 mt-8 text-sm font-bold text-white rounded-md bg-primary'>
                 Proceed

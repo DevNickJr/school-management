@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import React, { useReducer, FormEvent } from 'react'
+import React, { useReducer, FormEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 import { IUserLogin, ILoginReducerAction, IUserLoginResponse, AccountTypeEnum } from '@/interfaces'
 import { useRouter } from 'next/navigation'
@@ -8,6 +8,8 @@ import useMutate from '@/hooks/useMutate'
 import { apiLogin } from '@/services/AuthService'
 import Loader from '@/components/Loader'
 import { useAuthContext } from '@/hooks/useAuthContext'
+import { MdRemoveRedEye } from 'react-icons/md'
+import { EyeIcon, EyeOff } from 'lucide-react'
 
 const initialState: IUserLogin = {
   email: '',
@@ -20,7 +22,7 @@ const Login = () => {
     return { ...state, [action.type]: action.payload }
   }, initialState)
   const { dispatch } = useAuthContext()
-
+  const [show, setShow] = useState(false)
   const router = useRouter()
 
   const loginMutation = useMutate<IUserLogin, any>(
@@ -59,7 +61,11 @@ const Login = () => {
             </div>
             <div className='flex flex-col gap-2 text-xs'>
               <label htmlFor="name">Password</label>
-              <input  value={user?.password} onChange={(e) => userDispatch({ type: "password", payload: e.target.value})} type="text" name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
+              <div className='relative flex flex-col'>
+                <input  value={user?.password} onChange={(e) => userDispatch({ type: "password", payload: e.target.value})} type={show ? "text" : 'password'} name="password" id="password" className='p-3 border rounded-md placeholder:text-sm' placeholder='Enter Password' />
+                {show && <EyeIcon onClick={() => setShow(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+                {!show && <EyeOff onClick={() => setShow(prev => !prev)} className='absolute h-4 md:h-5 w-10 top-1/2 z-10 -translate-y-1/2 right-2 cursor-pointer' />}
+              </div>
             </div>
         </div>
         <Link href='/forgot-password' className='my-2 text-sm font-semibold text-primary'>
