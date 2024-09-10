@@ -1,5 +1,5 @@
 import React from 'react'
-import HouseImg from "@/assets/logo.svg"
+import HouseImg from "@/assets/logo.png"
 import Image, { StaticImageData } from 'next/image'
 import { MdAdd } from 'react-icons/md'
 import { LineWave } from 'react-loader-spinner'

@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import ErrorImg from "@/assets/logo.svg"
+import ErrorImg from "@/assets/logo.png"
 import Image from 'next/image'
 import { Button } from '../ui/button'
 
