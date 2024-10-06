@@ -73,7 +73,7 @@ export default function AddAcademicYearDialog({
 			<DialogContent className="sm:max-w-[525px] max-h-[90dvh] overflow-auto text-gray-800">
 				<DialogHeader>
 					<DialogTitle>Add AcademicYear</DialogTitle>
-					<DialogDescription>Add AcademicYear to your school</DialogDescription>
+					<DialogDescription>Add Academic Year in order</DialogDescription>
 				</DialogHeader>
 				<form onSubmit={onSubmit} className="grid gap-4 py-4 gap-x-5">
                     <div className="grid gap-4">
@@ -84,13 +84,16 @@ export default function AddAcademicYearDialog({
                             <Input
                                 id="startYear"
                                 name="startYear"
-                                placeholder=""
+                                placeholder="2021/2022"
                                 className=""
                                 value={data.year}
 								onChange={(e) => dispatch({ type: "year", payload: e.target.value})}
                             />
                         </div>
                     </div>
+					<p className="text-xs">
+						NOTE: Academic year should be added in order - eg 2020/2021 must be added before 2021/2022
+					</p>
 					<DialogFooter className="flex items-center justify-center sm:justify-center">
 						<Button
 					
