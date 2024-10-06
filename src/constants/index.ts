@@ -23,12 +23,12 @@ const navItems: INav[] =  [
         id: 2,
         title: "Account Management",
         navItems: [
-            {
-                id: 1,
-                title: "Managers",
-                link: "/dashboard/managers",
-                Icon: MdOutlinePersonPin,
-            },
+            // {
+            //     id: 1,
+            //     title: "Managers",
+            //     link: "/dashboard/managers",
+            //     Icon: MdOutlinePersonPin,
+            // },
             {
                 id: 2,
                 title: "Teachers",

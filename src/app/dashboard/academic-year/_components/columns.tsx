@@ -41,7 +41,7 @@ export const academicYearColumnnsMaker = ({
     academicYearColumnnHelper.accessor("activeTerm", {
         header: ({ column }) => <ColumnHead title="Active Term" column={column} />,
         sortingFn: "text",
-        cell: (info) => <span className="whitespace-nowrap">{!!info.getValue()?.toString()}</span>,
+        cell: (info) => <span className="whitespace-nowrap">{info.getValue()?.toString()}</span>,
     }),
     academicYearColumnnHelper.accessor("isActive", {
         header: ({ column }) => <ColumnHead title="Is Active Session" column={column} />,
