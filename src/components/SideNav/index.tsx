@@ -47,10 +47,13 @@ const SideNav = ({ nav }: { nav: INav[] }) => {
     <div className={`md:flex w-full justify-between hidden max-h-screen min-h-screen h-screen text-black bg-white ${collapse ? "max-w-20 pl-3 pb-0" : "max-w-64 pl-6 pb-0"} transition-all`}>
         {(logoutMutation?.isPending) && <Loader />}
         <LogoutModal
-            logout={() => logoutMutation.mutate({
-                refresh_token: context.refreshToken!,
-                role: context.role!
-            })}
+            logout={() => 
+                context.dispatch({ type: 'LOGOUT', payload: null })
+                // logoutMutation.mutate({
+                // refresh_token: context.refreshToken!,
+                // role: context.role!
+                // })
+            }
             isOpen={logoutModalIsOpen} 
             setIsOpen={setLogoutModalOpen} 
         />
