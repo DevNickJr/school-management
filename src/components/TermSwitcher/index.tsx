@@ -9,14 +9,18 @@ import {
   } from '../ui/select'
 import { Label } from '../ui/label'
 import { useAuthContext } from '@/hooks/useAuthContext'
+import { TermEnum } from '@/interfaces'
+
+
+const terms: TermEnum[] = [
+  TermEnum.FIRST,
+  TermEnum.SECOND,
+  TermEnum.THIRD,
+]
+
 
 const TermSwitcher = ({ showLabel=false }: { showLabel?: boolean }) => {
   const context = useAuthContext()
-  const terms = [
-    "FIRST",
-    "SECOND",
-    "THIRD",
-  ]
 
   return (
     <div className="flex flex-col gap-2">
@@ -28,7 +32,7 @@ const TermSwitcher = ({ showLabel=false }: { showLabel?: boolean }) => {
       }
       <Select 
         onValueChange={
-          (value) => context.dispatch({ 
+          (value: TermEnum) => context.dispatch({ 
             type: "LOGIN", payload: {
               ...context,
               term: value,

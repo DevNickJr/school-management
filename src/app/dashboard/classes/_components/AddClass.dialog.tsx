@@ -157,6 +157,9 @@ export default function AddClassDialog({
 							</Select>
                         </div>
                     </div>
+					<p className="text-xs">
+						NOTE: Classes should be added in order (from lowest grade to highest) - eg Nursery 1 {'->'} Nursery 2 {'->'} Nursery 3 {'->'} Primary 1 {'->'} ..... SSS 3
+					</p>
 					<DialogFooter className="flex items-center justify-center sm:justify-center">
 						<Button
 					

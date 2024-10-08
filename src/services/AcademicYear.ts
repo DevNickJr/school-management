@@ -1,6 +1,6 @@
 import { IAuthContext } from "@/providers/AuthProvider"
 import BaseService from "./BaseService"
-import { IAcademicYear } from "@/interfaces"
+import { IAcademicYear, IChangeTerm } from "@/interfaces"
 
 const servicePrefix = "/academic-year"
 let user: string | null = '{}'
@@ -26,11 +26,9 @@ export const apiGetAcademicYears = () => {
     return BaseService.get(`${servicePrefix}`, Auth(token))
 }
 
-
 export const apiGetAllAcademicYears =  () => {
     return BaseService.get(`${servicePrefix}/all`, Auth(token))
 }
-
 
 // Get the active academic year
 export const apiGetActiveAcademicYear = () => {
@@ -45,4 +43,9 @@ export const apiActivateAcademicYear = (id: string) => {
 // Deactivate an academic year by ID
 export const apiDeactivateAcademicYear = (id: string) => {
     return BaseService.patch(`${servicePrefix}/${id}/deactivate`, {}, Auth(token))
+}
+
+// Set Active term
+export const apiSetActiveTerm = (data: IChangeTerm, { id }: { id: string}) => {
+    return BaseService.patch(`${servicePrefix}/${id}/set-term`, data, Auth(token))
 }

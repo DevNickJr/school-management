@@ -243,6 +243,11 @@ export interface IAcademicYear extends IBase {
     isActive?: boolean;
 }
 
+export interface IChangeTerm {
+    _id?: string;
+    activeTerm: TermEnum; // New field for the active term
+}
+
 
 export interface IAddClassSubject extends IBase {
     class: string;

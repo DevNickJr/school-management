@@ -15,7 +15,7 @@ const Header = ({ nav }: { nav: INav[] })  => {
         <h1 className='text-xl font-medium'>
             Dashboard
         </h1>
-        <div className='flex items-center gap-4'>
+        <div className='flex items-center gap-1 md:gap-4'>
           <AcademicYearSwitcher />
           <TermSwitcher />
           { isOpen ? 
