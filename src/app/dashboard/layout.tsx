@@ -33,7 +33,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <SideNav nav={navItems} />
       <div className="relative flex-1 overflow-y-auto rounded-md">
         <Header nav={navItems} />
-        <div className='h-full p-4 pt-6 md:p-8'>
+        <div className='px-4 pt-4 md:px-8 md:pt-8'>
           {children}
         </div>
       </div>
