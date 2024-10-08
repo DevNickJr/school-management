@@ -1,25 +1,27 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { usePagination } from '@/hooks/usePagination'
 import { useSorting } from '@/hooks/useSorting'
 import HouseImg from "@/assets/auth.png"
 import useFetch from '@/hooks/useFetch'
-import { IAcademicYear, IPaginatedResponse } from '@/interfaces'
+import { IAcademicYear, IChangeTerm, IPaginatedResponse } from '@/interfaces'
 import { MdAdd } from 'react-icons/md'
 import NoResult from '@/components/NoResult'
 import { Button } from '@/components/ui/button'
 import { academicYearColumnnsMaker } from './_components/columns'
 import DataTable from '@/components/Table/data-table'
 import AddAcademicYearDialog from './_components/AddAcademicYear.dialog'
-import { apiActivateAcademicYear, apiGetAcademicYears } from '@/services/AcademicYear'
+import { apiActivateAcademicYear, apiGetAcademicYears, apiSetActiveTerm } from '@/services/AcademicYear'
 import useMutate from '@/hooks/useMutate'
 import { toast } from 'react-toastify'
 import Loader from '@/components/Loader'
+import SetTermDialog from './_components/SetTerm.dialog'
 
 
 const AcademicYear = () => {
   const { limit, onPaginationChange, page, pagination } = usePagination();
   const { sorting, onSortingChange, field, order } = useSorting();
+  const [id, setId] = useState('')
   
   const { data: academicYears, error, isLoading, isFetching, refetch, fetchStatus } = useFetch<IPaginatedResponse<IAcademicYear[]>>({
       api: apiGetAcademicYears,
@@ -40,13 +42,16 @@ const AcademicYear = () => {
       },
       showErrorMessage: true
     }
-)
+  )
 
-  const columns = academicYearColumnnsMaker({ activateAcademicYearMutation })
+
+
+  const columns = academicYearColumnnsMaker({ activateAcademicYearMutation, setActiveYearOpen: (id: string) => setId(id) })
 
   return (
     <div className=''>
         {activateAcademicYearMutation.isPending && <Loader />}
+        <SetTermDialog id={id} setId={(id: string) => setId(id)} refetch={refetch} />
         <div className="flex flex-wrap justify-between gap-2 mb-5 md:flex-row md:items-center">
             <h2 className='text-3xl font-bold text-black/80'>Academic Years</h2>
             <AddAcademicYearDialog refetch={refetch}>

@@ -2,7 +2,7 @@
 import ColumnHead from "@/components/ColumnHead";
 import Actions from "@/components/Table/table-actions";
 import { Checkbox } from "@/components/ui/checkbox";
-import { IAcademicYear } from "@/interfaces";
+import { IAcademicYear, IChangeTerm } from "@/interfaces";
 import { formatDate3 } from "@/utils/date";
 import { UseMutationResult } from "@tanstack/react-query";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
@@ -12,8 +12,10 @@ const academicYearColumnnHelper = createColumnHelper<IAcademicYear>();
 
 export const academicYearColumnnsMaker = ({
     activateAcademicYearMutation,
+    setActiveYearOpen,
 }: {
     activateAcademicYearMutation: UseMutationResult<any, any, string, unknown>
+    setActiveYearOpen: (id: string) => void
 }) =>  [
     academicYearColumnnHelper.accessor("_id", {
         header: ({ column }) => <ColumnHead title="" column={column} />,
@@ -67,7 +69,13 @@ export const academicYearColumnnsMaker = ({
                             label: 'Activate Year',
                             fn: () => activateAcademicYearMutation.mutate(id),
                             icon: MdOutlineNotificationsActive,
-                        }
+                        },
+                        {
+                            // element?: ReactNode;
+                            label: 'Set Active Term',
+                            fn: () => setActiveYearOpen(id),
+                            icon: MdOutlineNotificationsActive,
+                        },
                     ]}
                 />
             );
