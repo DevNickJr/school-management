@@ -137,13 +137,17 @@ export default function AddClassDialog({
                                 className=""
                                 value={data.title}
                                 onChange={(e) => dispatch({ type: "title", payload: e.target.value })}
+								required={true}
                             />
                         </div>
 						<div className="flex flex-col gap-2">
                             <Label htmlFor="formTeacher" className="">
                                 Form Teacher
                             </Label>
-							<Select onValueChange={(value) => dispatch({ type: "formTeacher", payload: value })} defaultValue={data.formTeacher as string}>
+							<Select onValueChange={(value) => dispatch({ type: "formTeacher", payload: value })} defaultValue={data.formTeacher as string}
+							required={true}
+
+							>
 								<SelectTrigger className="">
 									<SelectValue placeholder="" />
 								</SelectTrigger>
