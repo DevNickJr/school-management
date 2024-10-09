@@ -73,7 +73,7 @@ export interface IUserLoginResponse {
     accessToken: string | null;
     refreshToken: string | null;
     academicYear: string | null;
-    term: string | null;
+    term: TermEnum | null;
 
 }
 
